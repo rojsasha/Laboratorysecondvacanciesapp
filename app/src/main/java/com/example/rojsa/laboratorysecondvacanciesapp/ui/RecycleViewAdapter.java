@@ -35,6 +35,7 @@ public class RecycleViewAdapter extends ArrayAdapter {
         super(context, 0, list);
         this.list = list;
         this.context = context;
+
     }
 
     @NonNull
