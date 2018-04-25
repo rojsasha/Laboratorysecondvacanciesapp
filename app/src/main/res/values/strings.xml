@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">AU.kg</string>
+    <string name="header_title">Все вакансии Кыргызстана</string>
+    <string name="header_version_program">Версия: 1.6.2</string>
+    <string name="drawer_search_item">Поиск</string>
+    <string name="drawer_item_best_vacancies">Избранные вакансии</string>
+    <string name="drawer_item_about">О нас</string>
+    <string name="drawer_item_exit">Выход</string>
+    <string name="todo">TODO</string>
+    <string name="textButton">позвонить</string>
+    <string name="no_phone_textview">не указан</string>
+    <string name="no_salary">Договорная</string>
+</resources>

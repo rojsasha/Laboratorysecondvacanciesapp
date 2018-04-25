@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#73447c</color>
+    <color name="colorPrimaryDark">#6a3c73</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="backgroundTabs">#f9b32a</color>
+    <color name="colorBorders">#dcdad5</color>
+
+    <color name="colorSelectedTab">#ab73b6</color>
+</resources>

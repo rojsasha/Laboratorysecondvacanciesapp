@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+
+
+        app:cardCornerRadius="5dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <LinearLayout
+                android:id="@+id/linearTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:paddingTop="12dp">
+
+                <TextView
+                    android:id="@+id/tvTitleCardView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginRight="3dp"
+                    android:maxLength="25"
+                    android:text="wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+                    android:textColor="@color/colorSelectedTab"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+
+                    android:id="@+id/tvDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_weight="1"
+                    android:fitsSystemWindows="true"
+                    android:gravity="right"
+                    android:maxLength="17"
+                    android:maxLines="1"
+                    android:text="adffsd"
+                    android:textSize="@dimen/date_sp"
+                    tools:ignore="RtlHardcoded" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/border"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/colorBorders"
+
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/linearTitle" />
+
+            <LinearLayout
+                android:id="@+id/linearProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/border"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_profile_name" />
+
+                <TextView
+
+                    android:id="@+id/tvJob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:maxLength="60"
+                    android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
+                    android:text="по результатам собеседованияж
+порезультатам скууа"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:id="@+id/linearSalary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/linearProfile"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_salary" />
+
+                <TextView
+                    android:id="@+id/tvSalary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
+                    android:text="по результатам собеседованияж
+порезультатам скууа" />
+
+                <CheckBox
+                    android:id="@+id/checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:button="@drawable/checkbox_selector"
+                    android:checked="true"
+                    android:focusable="false"
+                    android:theme="@style/MyCheckBox"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutViewed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/linearSalary"
+                tools:ignore="UseCompoundDrawables">
+
+
+                <ImageView
+
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/todo"
+                    android:src="@drawable/ic_status_watched" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_weight="1"
+                    android:maxLines="2"
+                    android:paddingLeft="6dp"
+                    android:paddingStart="6dp"
+                    android:text="Просмотрено"
+                    android:textSize="10dp" />
+            </LinearLayout>
+
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>
