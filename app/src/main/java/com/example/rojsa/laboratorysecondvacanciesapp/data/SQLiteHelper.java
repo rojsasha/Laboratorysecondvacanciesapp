@@ -43,8 +43,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
 
         cv.put(ID_VIEWED_VACANCY,key);
-        long rowId = db.insert(TABLE_VIEWED,null,cv);
-        Log.d("inserted rows", "rows" + rowId);
+        int update = db.update(TABLE_VIEWED,cv,ID_VIEWED_VACANCY + " = ?",new String[]{key});
+        if (update<=0) db.insert(TABLE_VIEWED,null,cv);
+        Log.d("inserted rows", "rows" + update);
         db.close();
     }
 

@@ -41,7 +41,6 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         createDrawer(toolbar);
         initViewElement();
         writeData();
-
     }
 
     private void initViewElement() {
@@ -64,7 +63,9 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         btnCall.setOnClickListener(this);
         btnPrev.setOnClickListener(this);
         btnNext.setOnClickListener(this);
+
     }
+
 
     private void writeData() {
         AllDayModel model = mListVacancy.get(mPos);
@@ -74,6 +75,8 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         tvSalary.setText(model.getSalary());
         tvSite.setText(model.getSiteAddress());
         tvDetailVacancy.setText(model.getBody());
+
+        if (model.getProfile().equals("")) tvJob.setText(R.string.no_phone_textview);
 
         if (model.getSalary().equals("")) {
             tvSalary.setText(R.string.no_salary);
@@ -85,12 +88,13 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
             btnCall.setVisibility(View.GONE);
             tvPhoneNumber.setText(R.string.no_phone_textview);
         } else {
+            btnCall.setVisibility(View.VISIBLE);
+
             tvPhoneNumber.setText(model.getTelephone());
         }
 
         disableButton();
         saveIdVacancy(model);
-
     }
 
     private void saveIdVacancy(final AllDayModel model) {
@@ -103,7 +107,6 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         };
         Thread thread = new Thread(runnable);
         thread.start();
-
     }
 
     @Override
@@ -113,23 +116,18 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
                 String tel = mListVacancy.get(mPos).getTelephone();
                 if (tel.contains(";")) {
                     showDialog(tel);
+
                 } else {
                     Intent intent = new Intent(Intent.ACTION_DIAL);
-                    intent.setData(Uri.parse("tel: " + mListVacancy.get(mPos).getTelephone()));
+                    intent.setData(Uri.parse("tel: " + tel.replace(".","")));
                     startActivity(intent);
                 }
                 break;
             case R.id.btnPrev:
-                Toast.makeText(getApplicationContext(), "asrwefewtertretretret" +
-                        "", Toast.LENGTH_LONG).show();
-                changeVacancy();
-
-
+                prevVacancy();
                 break;
             case R.id.btnNext:
-                Toast.makeText(getApplicationContext(), "sadasdsadsad", Toast.LENGTH_LONG).show();
-                changeVacancy();
-
+                nextVacancy();
                 break;
         }
     }
@@ -141,38 +139,22 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         } else if (mListVacancy.size() - 1 == mPos) {
             btnNext.setVisibility(View.INVISIBLE);
         }
-
-
     }
 
-    private void changeVacancy() {
-        if (mPos == 1) {
-            mPos = mPos - 1;
-            btnPrev.setVisibility(View.INVISIBLE);
-            writeData();
-        } else {
-            btnNext.setVisibility(View.VISIBLE);
-
-            mPos = mPos - 1;
-            writeData();
-        }
-
-        if (mPos == mListVacancy.size() - 2) {
-
-            mPos = mPos + 1;
-            writeData();
-            btnPrev.setVisibility(View.INVISIBLE);
-        } else {
-            btnPrev.setVisibility(View.VISIBLE);
-            mPos = mPos + 1;
-            writeData();
-        }
-
+    private void prevVacancy() {
+        mPos = mPos - 1;
+        disableButton();
+        btnNext.setVisibility(View.VISIBLE);
+        writeData();
+        saveIdVacancy(mListVacancy.get(mPos));
     }
 
     private void nextVacancy() {
-
-
+        mPos = mPos + 1;
+        disableButton();
+        btnPrev.setVisibility(View.VISIBLE);
+        writeData();
+        saveIdVacancy(mListVacancy.get(mPos));
     }
 
     private void showDialog(String tel) {
@@ -190,8 +172,6 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
                 });
         AlertDialog alert = builder.create();
         alert.show();
-
-
     }
 
 

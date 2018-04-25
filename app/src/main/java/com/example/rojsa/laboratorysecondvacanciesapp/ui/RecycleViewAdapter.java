@@ -58,26 +58,39 @@ public class RecycleViewAdapter extends ArrayAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         AllDayModel model = (AllDayModel) getItem(position);
-        holder.tvDate.setText(model.getData());
-        holder.tvDate.setText(model.getData());
+        holder.tvDate.setText(formatData(model.getData()));
         holder.tvJob.setText(model.getHeader());
         holder.tvTitleCardView.setText(model.getProfession());
         holder.tvSalary.setText(model.getSalary());
+        if (model.getSalary().equals("")) holder.tvSalary.setText(R.string.no_salary);
         if (setViewed(model.getPid())) {
             holder.layoutViewed.setVisibility(View.VISIBLE);
         }
-
         return convertView;
     }
 
-    private boolean setViewed(String id) {
+    private String formatData(String data) {
+        String inputPattern = "yyyy-MM-dd HH:mm:ss";
+        String outputPattern = "HH:mm dd MMM yyyy";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.getDefault());
+        Date date;
+        String str = null;
+        try {
+            date = inputFormat.parse(data);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
 
+    }
+
+    private boolean setViewed(String id) {
         for (int i = 0; i < savedList.size(); i++) {
             if (id.equals(savedList.get(i))) {
                 return true;
             }
-
-
         }
         return false;
     }

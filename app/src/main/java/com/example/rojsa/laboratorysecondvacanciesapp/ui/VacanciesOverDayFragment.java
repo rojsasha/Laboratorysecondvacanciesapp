@@ -62,7 +62,7 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
         service.getAllVacancies("au", "get_all_vacancies", String.valueOf(refreshLimit), "1")
                 .enqueue(new Callback<List<AllDayModel>>() {
                     @Override
-                    public void onResponse(Call<List<AllDayModel>> call, Response<List<AllDayModel>> response) {
+                    public void onResponse(@NonNull Call<List<AllDayModel>> call, @NonNull Response<List<AllDayModel>> response) {
                         listVacancy = response.body();
                         RecycleViewAdapter adapter = new RecycleViewAdapter(getContext(),listVacancy);
                         recyclerView.setAdapter(adapter);
@@ -71,7 +71,7 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
                     }
 
                     @Override
-                    public void onFailure(Call<List<AllDayModel>> call, Throwable t) {
+                    public void onFailure(@NonNull Call<List<AllDayModel>> call, @NonNull Throwable t) {
 
                     }
                 });

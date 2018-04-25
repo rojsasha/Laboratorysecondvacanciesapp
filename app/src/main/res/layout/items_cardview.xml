@@ -50,7 +50,7 @@
                     android:layout_weight="1"
                     android:fitsSystemWindows="true"
                     android:gravity="right"
-                    android:maxLength="17"
+                    android:maxLength="19"
                     android:maxLines="1"
                     android:text="adffsd"
                     android:textSize="@dimen/date_sp"
