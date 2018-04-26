@@ -32,8 +32,6 @@ public class RecycleViewAdapter extends ArrayAdapter {
 
     public RecycleViewAdapter(@NonNull Context context, List<AllDayModel> list) {
         super(context, 0, list);
-
-
     }
 
     @NonNull
