@@ -10,4 +10,6 @@
     <string name="textButton">позвонить</string>
     <string name="no_phone_textview">не указан</string>
     <string name="no_salary">Договорная</string>
+    <string name="au_kg">AU.KG</string>
+    <string name="all_vacancies_kyr">Все вакансии Кыргызстана</string>
 </resources>

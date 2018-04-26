@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,14 +28,10 @@ import java.util.Locale;
  */
 
 public class RecycleViewAdapter extends ArrayAdapter {
-    private List<AllDayModel> list;
-    private Context context;
-    ArrayList<String> savedList = StartApplication.get(getContext()).getSqLiteHelper().getViewed();
+    private ArrayList<String> savedList = StartApplication.get(getContext()).getSqLiteHelper().getViewed();
 
     public RecycleViewAdapter(@NonNull Context context, List<AllDayModel> list) {
         super(context, 0, list);
-        this.list = list;
-        this.context = context;
 
 
     }
@@ -51,6 +48,7 @@ public class RecycleViewAdapter extends ArrayAdapter {
             holder.tvTitleCardView = convertView.findViewById(R.id.tvTitleCardView);
             holder.tvSalary = convertView.findViewById(R.id.tvSalary);
             holder.tvJob = convertView.findViewById(R.id.tvJob);
+            holder.checkBox = convertView.findViewById(R.id.checkbox);
             holder.layoutViewed = convertView.findViewById(R.id.layoutViewed);
 
             convertView.setTag(holder);
@@ -62,6 +60,7 @@ public class RecycleViewAdapter extends ArrayAdapter {
         holder.tvJob.setText(model.getHeader());
         holder.tvTitleCardView.setText(model.getProfession());
         holder.tvSalary.setText(model.getSalary());
+
         if (model.getSalary().equals("")) holder.tvSalary.setText(R.string.no_salary);
         if (setViewed(model.getPid())) {
             holder.layoutViewed.setVisibility(View.VISIBLE);
@@ -97,6 +96,7 @@ public class RecycleViewAdapter extends ArrayAdapter {
 
     class ViewHolder {
         TextView tvDate, tvTitleCardView, tvSalary, tvJob;
+        CheckBox checkBox;
         LinearLayout layoutViewed;
 
     }
