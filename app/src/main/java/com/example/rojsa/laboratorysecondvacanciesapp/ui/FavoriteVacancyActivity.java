@@ -22,6 +22,7 @@ public class FavoriteVacancyActivity extends BaseActivity {
     }
 
 
+
     private void getFavoriteData(){
         ListView listView = findViewById(R.id.recycleView);
         List<AllDayModel> list = sqLiteHelper.getFavoriteVacancy();
