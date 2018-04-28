@@ -1,8 +1,10 @@
 package com.example.rojsa.laboratorysecondvacanciesapp.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -12,6 +14,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 /**
  * Created by rojsa on 15.04.2018.
@@ -28,6 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         .withIcon(R.drawable.logo)
                         .withEmail(R.string.header_version_program)
                 )
+
                 .withHeaderBackground(R.drawable.background_drawer)
                 .withAlternativeProfileHeaderSwitching(false)
                 .withTranslucentStatusBar(true)
@@ -39,10 +43,24 @@ public abstract class BaseActivity extends AppCompatActivity {
         PrimaryDrawerItem about = new PrimaryDrawerItem().withName(R.string.drawer_item_about).withIdentifier(3).withIcon(R.drawable.ic_search_grey);
         PrimaryDrawerItem exit = new PrimaryDrawerItem().withName(R.string.drawer_item_exit).withIdentifier(4).withIcon(R.drawable.ic_search_grey);
 
+        Drawer.OnDrawerItemClickListener click = new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                switch (position){
+                    case 2:
+                        Intent intent = new Intent(getApplicationContext(),FavoriteVacancyActivity.class);
+                        startActivity(intent);
+                        break;
+                }
+                return false;
+            }
+        };
+
         Drawer drawer = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withAccountHeader(header)
+                .withOnDrawerItemClickListener(click)
                 .addDrawerItems(
                         search,
                         vacancies,

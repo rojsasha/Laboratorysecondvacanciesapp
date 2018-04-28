@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.StartApplication;
+import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
 import com.example.rojsa.laboratorysecondvacanciesapp.model.AllDayModel;
 
 import java.text.ParseException;
@@ -29,9 +30,9 @@ import java.util.Locale;
  * Created by rojsa on 18.04.2018.
  */
 
-public class RecycleViewAdapter extends ArrayAdapter{
-    private ArrayList<String> savedList = StartApplication.get(getContext()).getSqLiteHelper().getViewed();
-    private boolean [] mCheckedState;
+public class RecycleViewAdapter extends ArrayAdapter {
+    private SQLiteHelper sqLiteHelper = StartApplication.get(getContext()).getSqLiteHelper();
+    private boolean[] mCheckedState;
 
     public RecycleViewAdapter(@NonNull Context context, List<AllDayModel> list) {
         super(context, 0, list);
@@ -64,11 +65,25 @@ public class RecycleViewAdapter extends ArrayAdapter{
         holder.tvTitleCardView.setText(model.getProfession());
         holder.tvSalary.setText(model.getSalary());
 
+
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 mCheckedState[position] = b;
-                notifyDataSetChanged();
+            }
+        });
+
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mCheckedState[position]) {
+                    Toast.makeText(getContext(), "Сохранено в избранные " + mCheckedState[position] + model.getHeader(), Toast.LENGTH_SHORT).show();
+                    saveVacancy(model);
+                } else {
+                    deleteVacancy(model);
+                    Toast.makeText(getContext(), "Удалено из избранных " + mCheckedState[position] + model.getHeader(), Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -78,6 +93,32 @@ public class RecycleViewAdapter extends ArrayAdapter{
             holder.layoutViewed.setVisibility(View.VISIBLE);
         }
         return convertView;
+    }
+
+    private void saveVacancy(final AllDayModel model) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                sqLiteHelper.saveFavoriteVacancy(model);
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+
+    private void deleteVacancy(final AllDayModel model) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                sqLiteHelper.deleteFavoriteVacancy(model.getPid());
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+
+    private void onClick() {
+
     }
 
 
@@ -99,6 +140,7 @@ public class RecycleViewAdapter extends ArrayAdapter{
     }
 
     private boolean setViewed(String id) {
+        ArrayList<String> savedList = sqLiteHelper.getViewed();
         for (int i = 0; i < savedList.size(); i++) {
             if (id.equals(savedList.get(i))) {
                 return true;
@@ -106,7 +148,6 @@ public class RecycleViewAdapter extends ArrayAdapter{
         }
         return false;
     }
-
 
 
     class ViewHolder {

@@ -123,8 +123,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         cv.put(SITE_ADDRESS, model.getSiteAddress());
         cv.put(BODY, model.getBody());
 
-        long rowsId = db.insert(TABLE_VIEWED, null, cv);
-        Log.d("inserted rows", "rows" + rowsId);
+        long rowsId = db.insert(TABLE_FAVORITE_VACANCY, null, cv);
+        Log.d("saved vacancies", "rows" + rowsId + model.getPid());
         db.close();
     }
 
@@ -172,6 +172,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return list;
+    }
+
+    public void deleteFavoriteVacancy(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long rowId = db.delete(TABLE_FAVORITE_VACANCY, PID + "=?", new String[]{id});
+        Log.d("deleteFavoriteVacancy", "ok" + id);
+        db.close();
+
     }
 
 }
