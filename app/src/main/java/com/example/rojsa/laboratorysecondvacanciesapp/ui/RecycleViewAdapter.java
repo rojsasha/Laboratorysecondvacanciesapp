@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.StartApplication;
@@ -27,17 +29,19 @@ import java.util.Locale;
  * Created by rojsa on 18.04.2018.
  */
 
-public class RecycleViewAdapter extends ArrayAdapter {
+public class RecycleViewAdapter extends ArrayAdapter{
     private ArrayList<String> savedList = StartApplication.get(getContext()).getSqLiteHelper().getViewed();
+    private boolean [] mCheckedState;
 
     public RecycleViewAdapter(@NonNull Context context, List<AllDayModel> list) {
         super(context, 0, list);
+        mCheckedState = new boolean[list.size()];
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ViewHolder holder;
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        final ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
 
@@ -49,22 +53,33 @@ public class RecycleViewAdapter extends ArrayAdapter {
             holder.checkBox = convertView.findViewById(R.id.checkbox);
             holder.layoutViewed = convertView.findViewById(R.id.layoutViewed);
 
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        AllDayModel model = (AllDayModel) getItem(position);
+        final AllDayModel model = (AllDayModel) getItem(position);
         holder.tvDate.setText(formatData(model.getData()));
         holder.tvJob.setText(model.getHeader());
         holder.tvTitleCardView.setText(model.getProfession());
         holder.tvSalary.setText(model.getSalary());
 
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                mCheckedState[position] = b;
+                notifyDataSetChanged();
+            }
+        });
+
+        holder.checkBox.setChecked(mCheckedState[position]);
         if (model.getSalary().equals("")) holder.tvSalary.setText(R.string.no_salary);
         if (setViewed(model.getPid())) {
             holder.layoutViewed.setVisibility(View.VISIBLE);
         }
         return convertView;
     }
+
 
     private String formatData(String data) {
         String inputPattern = "yyyy-MM-dd HH:mm:ss";
@@ -91,6 +106,8 @@ public class RecycleViewAdapter extends ArrayAdapter {
         }
         return false;
     }
+
+
 
     class ViewHolder {
         TextView tvDate, tvTitleCardView, tvSalary, tvJob;

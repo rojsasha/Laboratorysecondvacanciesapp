@@ -144,7 +144,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
                     android:button="@drawable/checkbox_selector"
-                    android:checked="true"
                     android:focusable="false"
                     android:theme="@style/MyCheckBox"
                     app:layout_constraintBottom_toBottomOf="parent"

@@ -1,5 +1,7 @@
 package com.example.rojsa.laboratorysecondvacanciesapp.data;
 
+import com.example.rojsa.laboratorysecondvacanciesapp.utils.Constants;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 

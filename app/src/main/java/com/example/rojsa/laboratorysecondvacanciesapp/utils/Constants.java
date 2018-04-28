@@ -1,4 +1,4 @@
-package com.example.rojsa.laboratorysecondvacanciesapp.data;
+package com.example.rojsa.laboratorysecondvacanciesapp.utils;
 
 
 public class Constants {

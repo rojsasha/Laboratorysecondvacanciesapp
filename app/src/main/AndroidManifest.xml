@@ -16,7 +16,7 @@
 
         </activity>
         <activity android:name=".ui.DetailsVacancyActivity" />
-        <activity android:name=".SplashScreenActivity">
+        <activity android:name=".ui.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

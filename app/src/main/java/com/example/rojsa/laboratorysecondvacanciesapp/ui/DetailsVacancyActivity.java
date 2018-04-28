@@ -22,6 +22,7 @@ import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
 import com.example.rojsa.laboratorysecondvacanciesapp.model.AllDayModel;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailsVacancyActivity extends BaseActivity implements View.OnClickListener {
@@ -101,8 +102,8 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                SQLiteHelper sqLiteHelper = StartApplication.get(getApplicationContext()).getSqLiteHelper();
-                sqLiteHelper.saveViewed(model.getPid());
+                SQLiteHelper saveID = StartApplication.get(getApplicationContext()).getSqLiteHelper();
+                saveID.saveViewed(model.getPid());
             }
         };
         Thread thread = new Thread(runnable);
@@ -142,7 +143,7 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
     }
 
     private void prevVacancy() {
-        mPos = mPos - 1;
+        mPos -= 1;
         disableButton();
         btnNext.setVisibility(View.VISIBLE);
         writeData();
@@ -150,7 +151,7 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
     }
 
     private void nextVacancy() {
-        mPos = mPos + 1;
+        mPos += 1;
         disableButton();
         btnPrev.setVisibility(View.VISIBLE);
         writeData();

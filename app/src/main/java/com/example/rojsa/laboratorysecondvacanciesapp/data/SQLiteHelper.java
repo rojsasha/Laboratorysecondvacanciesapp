@@ -123,9 +123,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         cv.put(SITE_ADDRESS, model.getSiteAddress());
         cv.put(BODY, model.getBody());
 
-        int update = db.update(TABLE_FAVORITE_VACANCY, cv, PID + " = ?", new String[]{model.getPid()});
-        if (update <= 0) db.insert(TABLE_VIEWED, null, cv);
-        Log.d("inserted rows", "rows" + update);
+        long rowsId = db.insert(TABLE_VIEWED, null, cv);
+        Log.d("inserted rows", "rows" + rowsId);
         db.close();
     }
 
