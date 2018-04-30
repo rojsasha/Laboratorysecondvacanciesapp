@@ -1,14 +1,18 @@
 
 package com.example.rojsa.laboratorysecondvacanciesapp.model;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 
-public class AllDayModel implements Serializable {
+public class AllDayModel implements Parcelable {
+
+    public AllDayModel() {
+    }
 
     @SerializedName("id")
     @Expose
@@ -70,6 +74,41 @@ public class AllDayModel implements Serializable {
     @SerializedName("paid")
     @Expose
     private String paid;
+
+    protected AllDayModel(Parcel in) {
+        pid = in.readString();
+        header = in.readString();
+        profile = in.readString();
+        salary = in.readString();
+        telephone = in.readString();
+        data = in.readString();
+        profession = in.readString();
+        siteAddress = in.readString();
+        salary1 = in.readString();
+        link = in.readString();
+        body = in.readString();
+        if (in.readByte() == 0) {
+            raiting = null;
+        } else {
+            raiting = in.readInt();
+        }
+        updateDate = in.readString();
+        term = in.readString();
+        postCreated = in.readString();
+        paid = in.readString();
+    }
+
+    public static final Creator<AllDayModel> CREATOR = new Creator<AllDayModel>() {
+        @Override
+        public AllDayModel createFromParcel(Parcel in) {
+            return new AllDayModel(in);
+        }
+
+        @Override
+        public AllDayModel[] newArray(int size) {
+            return new AllDayModel[size];
+        }
+    };
 
     public Object getId() {
         return id;
@@ -231,4 +270,33 @@ public class AllDayModel implements Serializable {
         this.paid = paid;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(pid);
+        parcel.writeString(header);
+        parcel.writeString(profile);
+        parcel.writeString(salary);
+        parcel.writeString(telephone);
+        parcel.writeString(data);
+        parcel.writeString(profession);
+        parcel.writeString(siteAddress);
+        parcel.writeString(salary1);
+        parcel.writeString(link);
+        parcel.writeString(body);
+        if (raiting == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(raiting);
+        }
+        parcel.writeString(updateDate);
+        parcel.writeString(term);
+        parcel.writeString(postCreated);
+        parcel.writeString(paid);
+    }
 }

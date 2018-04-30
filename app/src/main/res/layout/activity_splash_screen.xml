@@ -8,31 +8,44 @@
     tools:context=".ui.SplashScreenActivity">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/logo"
-            android:contentDescription="@string/todo" />
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/logo" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/au_kg"
             android:textColor="@color/md_white_1000"
-            android:textSize="40sp"
-             />
+            android:textSize="40sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:text="@string/all_vacancies_kyr"
+
             android:textColor="@color/md_white_1000"
-            android:text="@string/all_vacancies_kyr"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:indeterminate="true"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

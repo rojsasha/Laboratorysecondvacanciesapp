@@ -30,6 +30,7 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
     private List<AllDayModel> mListVacancy;
     private int mPos;
     private AppCompatButton btnCall;
+    private AllDayModel modelVacancy;
     private LinearLayout btnPrev, btnNext;
 
     @Override
@@ -38,15 +39,16 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.activity_details_vacancy);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         createDrawer(toolbar);
+
         initViewElement();
         writeData();
     }
 
     private void initViewElement() {
         Intent intent = getIntent();
-        mListVacancy = (List<AllDayModel>) intent.getSerializableExtra("listVacancy");
+        modelVacancy = intent.getParcelableExtra("modelVacancy");
         mPos = intent.getIntExtra("position", 0);
 
         tvTitleDetails = findViewById(R.id.tvTitleDetails);
@@ -69,33 +71,33 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
 
 
     private void writeData() {
-        AllDayModel model = mListVacancy.get(mPos);
-        tvTitleDetails.setText(model.getHeader());
-        tvJob.setText(model.getProfile());
-        tvDate.setText(model.getData());
-        tvSalary.setText(model.getSalary());
-        tvSite.setText(model.getSiteAddress());
-        tvDetailVacancy.setText(model.getBody());
 
-        if (model.getProfile().equals("")) tvJob.setText(R.string.no_phone_textview);
+        tvTitleDetails.setText(modelVacancy.getHeader());
+        tvJob.setText(modelVacancy.getProfile());
+        tvDate.setText(modelVacancy.getData());
+        tvSalary.setText(modelVacancy.getSalary());
+        tvSite.setText(modelVacancy.getSiteAddress());
+        tvDetailVacancy.setText(modelVacancy.getBody());
 
-        if (model.getSalary().equals("")) {
+        if (modelVacancy.getProfile().equals("")) tvJob.setText(R.string.no_phone_textview);
+
+        if (modelVacancy.getSalary().equals("")) {
             tvSalary.setText(R.string.no_salary);
         } else {
-            tvSalary.setText(model.getSalary());
+            tvSalary.setText(modelVacancy.getSalary());
         }
 
-        if (model.getTelephone().equals("")) {
+        if (modelVacancy.getTelephone().equals("")) {
             btnCall.setVisibility(View.GONE);
             tvPhoneNumber.setText(R.string.no_phone_textview);
         } else {
             btnCall.setVisibility(View.VISIBLE);
 
-            tvPhoneNumber.setText(model.getTelephone());
+            tvPhoneNumber.setText(modelVacancy.getTelephone());
         }
 
         disableButton();
-        saveIdVacancy(model);
+        saveIdVacancy(modelVacancy);
     }
 
     private void saveIdVacancy(final AllDayModel model) {
@@ -173,6 +175,10 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
                 });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+    private void getAllDayVacancies(){
+        SQLiteHelper sqLiteHelper = StartApplication.get(getApplicationContext()).getSqLiteHelper();
+        mListVacancy = sqLiteHelper.getAllVacanciesOverDay();
     }
 
 

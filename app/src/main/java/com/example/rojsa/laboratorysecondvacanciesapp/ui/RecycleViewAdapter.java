@@ -33,10 +33,13 @@ import java.util.Locale;
 public class RecycleViewAdapter extends ArrayAdapter {
     private SQLiteHelper sqLiteHelper = StartApplication.get(getContext()).getSqLiteHelper();
     private boolean[] mCheckedState;
+     private List<AllDayModel> list;
 
     public RecycleViewAdapter(@NonNull Context context, List<AllDayModel> list) {
         super(context, 0, list);
         mCheckedState = new boolean[list.size()];
+        this.list= list;
+
     }
 
     @NonNull
@@ -116,11 +119,6 @@ public class RecycleViewAdapter extends ArrayAdapter {
         Thread thread = new Thread(runnable);
         thread.start();
     }
-
-    private void onClick() {
-
-    }
-
 
     private String formatData(String data) {
         String inputPattern = "yyyy-MM-dd HH:mm:ss";

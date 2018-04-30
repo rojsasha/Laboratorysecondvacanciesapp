@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -21,6 +22,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+
 
     protected void createDrawer(Toolbar toolbar) {
 
@@ -73,5 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     }
+
+
 
 }
