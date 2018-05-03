@@ -13,14 +13,14 @@ import com.example.rojsa.laboratorysecondvacanciesapp.model.AllDayModel;
 import java.util.List;
 
 public class FavoriteVacancyActivity extends BaseActivity {
-    SQLiteHelper sqLiteHelper;
+    SQLiteHelper mSQLiteHelper;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_vacancies_over_day);
         Toolbar toolbar = findViewById(R.id.toolbar);
         createDrawer(toolbar);
-        sqLiteHelper = StartApplication.get(getApplicationContext()).getSqLiteHelper();
+        mSQLiteHelper = StartApplication.get(getApplicationContext()).getSqLiteHelper();
         getFavoriteData();
     }
 
@@ -28,9 +28,9 @@ public class FavoriteVacancyActivity extends BaseActivity {
 
     private void getFavoriteData(){
         ListView listView = findViewById(R.id.recycleView);
-        List<AllDayModel> list = sqLiteHelper.getFavoriteVacancy();
+        List<AllDayModel> list = mSQLiteHelper.getFavoriteVacancy();
         if (list.isEmpty())return;
-        RecycleViewAdapter adapter = new RecycleViewAdapter(getApplicationContext(),list);
+        ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(),list);
         listView.setAdapter(adapter);
     }
 }

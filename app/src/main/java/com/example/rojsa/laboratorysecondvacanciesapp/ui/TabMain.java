@@ -4,18 +4,18 @@ import android.support.v4.app.Fragment;
 
 
 public class TabMain {
-    private final Fragment fragment;
-    private final CharSequence title;
+    private final Fragment mFragment;
+    private final CharSequence mTitle;
 
-    public TabMain(Fragment fragment, CharSequence title) {
-        this.fragment = fragment;
-        this.title = title;
+    public TabMain(Fragment mFragment, CharSequence title) {
+        this.mFragment = mFragment;
+        this.mTitle = title;
     }
 
     public Fragment getFragment() {
-        return fragment;
+        return mFragment;
     }
     public CharSequence getTitle(){
-        return title;
+        return mTitle;
     }
 }

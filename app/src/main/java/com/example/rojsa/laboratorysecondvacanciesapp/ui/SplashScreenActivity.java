@@ -3,7 +3,6 @@ package com.example.rojsa.laboratorysecondvacanciesapp.ui;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +16,6 @@ import com.example.rojsa.laboratorysecondvacanciesapp.StartApplication;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.RequestInterface;
 import com.example.rojsa.laboratorysecondvacanciesapp.model.AllDayModel;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,14 +24,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    ProgressBar progressBar;
+    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
+        mProgressBar = findViewById(R.id.progressBar);
+        mProgressBar.setVisibility(View.VISIBLE);
 
         ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
@@ -44,7 +42,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
             } else {
                 Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                progressBar.setVisibility(View.INVISIBLE);
+                mProgressBar.setVisibility(View.INVISIBLE);
                 startActivity(intent);
                 finish();
             }
@@ -63,7 +61,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                         List<AllDayModel> list = response.body();
                         intent.putParcelableArrayListExtra("listVacancy", (ArrayList<? extends Parcelable>) list);
                         Toast.makeText(getApplicationContext(),"internet down",Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.INVISIBLE);
+                        mProgressBar.setVisibility(View.INVISIBLE);
                         startActivity(intent);
                         finish();
                     }

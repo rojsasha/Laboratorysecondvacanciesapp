@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.widget.ListView;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.FragmentCallBack;
@@ -15,8 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements FragmentCallBack {
-    private RequestInterface service;
-    private List<AllDayModel> list;
+    private List<AllDayModel> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity implements FragmentCallBack {
         setSupportActionBar(toolbar);
         createDrawer(toolbar);
         Intent intent = getIntent();
-        list = intent.getParcelableArrayListExtra("listVacancy");
+        mList = intent.getParcelableArrayListExtra("listVacancy");
 
     }
 
@@ -39,11 +39,10 @@ public class MainActivity extends BaseActivity implements FragmentCallBack {
         viewPager.setAdapter(new TabStateAdapter(getSupportFragmentManager(), tabs));
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
     @Override
     public List<AllDayModel> getAllVacancies() {
-        return list;
+        return mList;
     }
 }

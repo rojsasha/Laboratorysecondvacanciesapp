@@ -3,7 +3,6 @@ package com.example.rojsa.laboratorysecondvacanciesapp.ui;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,15 +29,15 @@ import java.util.Locale;
  * Created by rojsa on 18.04.2018.
  */
 
-public class RecycleViewAdapter extends ArrayAdapter {
-    private SQLiteHelper sqLiteHelper = StartApplication.get(getContext()).getSqLiteHelper();
+public class ListViewAdapter extends ArrayAdapter {
+    private SQLiteHelper mSqLiteHelper = StartApplication.get(getContext()).getSqLiteHelper();
     private boolean[] mCheckedState;
-     private List<AllDayModel> list;
+     private List<AllDayModel> mList;
 
-    public RecycleViewAdapter(@NonNull Context context, List<AllDayModel> list) {
+    public ListViewAdapter(@NonNull Context context, List<AllDayModel> list) {
         super(context, 0, list);
         mCheckedState = new boolean[list.size()];
-        this.list= list;
+        this.mList = list;
 
     }
 
@@ -102,7 +101,7 @@ public class RecycleViewAdapter extends ArrayAdapter {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                sqLiteHelper.saveFavoriteVacancy(model);
+                mSqLiteHelper.saveFavoriteVacancy(model);
             }
         };
         Thread thread = new Thread(runnable);
@@ -113,7 +112,7 @@ public class RecycleViewAdapter extends ArrayAdapter {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                sqLiteHelper.deleteFavoriteVacancy(model.getPid());
+                mSqLiteHelper.deleteFavoriteVacancy(model.getPid());
             }
         };
         Thread thread = new Thread(runnable);
@@ -138,7 +137,7 @@ public class RecycleViewAdapter extends ArrayAdapter {
     }
 
     private boolean setViewed(String id) {
-        ArrayList<String> savedList = sqLiteHelper.getViewed();
+        ArrayList<String> savedList = mSqLiteHelper.getViewed();
         for (int i = 0; i < savedList.size(); i++) {
             if (id.equals(savedList.get(i))) {
                 return true;

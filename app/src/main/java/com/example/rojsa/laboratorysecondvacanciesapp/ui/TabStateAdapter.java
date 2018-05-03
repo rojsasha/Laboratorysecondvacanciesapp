@@ -11,25 +11,25 @@ import java.util.ArrayList;
  */
 
 public class TabStateAdapter extends FragmentStatePagerAdapter {
-    ArrayList<TabMain> tabs;
+    ArrayList<TabMain> mTabs;
 
     public TabStateAdapter(FragmentManager fm, ArrayList<TabMain> tabs) {
         super(fm);
-        this.tabs = tabs;
+        this.mTabs = tabs;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return tabs.get(position).getFragment();
+        return mTabs.get(position).getFragment();
     }
 
     @Override
     public int getCount() {
-        return tabs.size();
+        return mTabs.size();
     }
 
     public CharSequence getPageTitle(int position) {
-        return tabs.get(position).getTitle();
+        return mTabs.get(position).getTitle();
     }
 
 }
