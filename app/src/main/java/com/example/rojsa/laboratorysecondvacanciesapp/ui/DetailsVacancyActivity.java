@@ -48,7 +48,7 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
 
     private void initViewElement() {
         Intent intent = getIntent();
-        modelVacancy = intent.getParcelableExtra("modelVacancy");
+//        modelVacancy = intent.getParcelableExtra("modelVacancy");
         mPos = intent.getIntExtra("position", 0);
 
         tvTitleDetails = findViewById(R.id.tvTitleDetails);
@@ -66,12 +66,13 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         btnCall.setOnClickListener(this);
         btnPrev.setOnClickListener(this);
         btnNext.setOnClickListener(this);
+        getAllDayVacancies();
 
     }
 
 
     private void writeData() {
-
+        modelVacancy = mListVacancy.get(mPos);
         tvTitleDetails.setText(modelVacancy.getHeader());
         tvJob.setText(modelVacancy.getProfile());
         tvDate.setText(modelVacancy.getData());
@@ -101,15 +102,10 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
     }
 
     private void saveIdVacancy(final AllDayModel model) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
+
                 SQLiteHelper saveID = StartApplication.get(getApplicationContext()).getSqLiteHelper();
                 saveID.saveViewed(model.getPid());
-            }
-        };
-        Thread thread = new Thread(runnable);
-        thread.start();
+
     }
 
     @Override
