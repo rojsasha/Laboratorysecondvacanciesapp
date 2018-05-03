@@ -1,4 +1,4 @@
-package com.example.rojsa.laboratorysecondvacanciesapp;
+package com.example.rojsa.laboratorysecondvacanciesapp.ui;
 
 import android.support.v4.app.Fragment;
 
