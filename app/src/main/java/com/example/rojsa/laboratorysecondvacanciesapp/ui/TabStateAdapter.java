@@ -11,9 +11,9 @@ import java.util.ArrayList;
  */
 
 public class TabStateAdapter extends FragmentStatePagerAdapter {
-    ArrayList<TabMain> mTabs;
+    private ArrayList<TabMain> mTabs;
 
-    public TabStateAdapter(FragmentManager fm, ArrayList<TabMain> tabs) {
+    TabStateAdapter(FragmentManager fm, ArrayList<TabMain> tabs) {
         super(fm);
         this.mTabs = tabs;
     }

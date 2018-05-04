@@ -7,11 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.rojsa.laboratorysecondvacanciesapp.model.AllDayModel;
+import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
 
 
 public class SQLiteHelper extends SQLiteOpenHelper {
@@ -126,7 +125,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return list;
     }
 
-    public void saveFavoriteVacancy(AllDayModel model) {
+    public void saveFavoriteVacancy(VacanciesModel model) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(PID, model.getPid());
@@ -144,9 +143,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<AllDayModel> getFavoriteVacancy() {
+    public List<VacanciesModel> getFavoriteVacancy() {
         SQLiteDatabase db = this.getWritableDatabase();
-        List<AllDayModel> list = new ArrayList<>();
+        List<VacanciesModel> list = new ArrayList<>();
         Cursor cursor = db.query(TABLE_FAVORITE_VACANCY,
                 null,
                 null,
@@ -166,7 +165,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             int indexBody = cursor.getColumnIndex(BODY);
 
             do {
-                AllDayModel model = new AllDayModel();
+                VacanciesModel model = new VacanciesModel();
                 model.setPid(cursor.getString(indexPid));
                 model.setHeader(cursor.getString(indexHeader));
                 model.setProfile(cursor.getString(indexProfile));
@@ -198,12 +197,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     }
 
-    public void saveAllVacanciesOverDay(List<AllDayModel> list) {
+    public void saveAllVacanciesOverDay(List<VacanciesModel> list) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         db.delete(TABLE_VACANCIES_OVER_DAY, null, null);
         for (int i = 0; i < list.size(); i++) {
-            AllDayModel model = list.get(i);
+            VacanciesModel model = list.get(i);
             cv.put(PID, model.getPid());
             cv.put(HEADER, model.getHeader());
             cv.put(PROFILE, model.getProfile());
@@ -219,9 +218,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<AllDayModel> getAllVacanciesOverDay() {
+    public List<VacanciesModel> getAllVacanciesOverDay() {
         SQLiteDatabase db = this.getWritableDatabase();
-        List<AllDayModel> list = new ArrayList<>();
+        List<VacanciesModel> list = new ArrayList<>();
         Cursor cursor = db.query(TABLE_VACANCIES_OVER_DAY,
                 null,
                 null,
@@ -241,7 +240,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             int indexBody = cursor.getColumnIndex(BODY);
 
             do {
-                AllDayModel model = new AllDayModel();
+                VacanciesModel model = new VacanciesModel();
                 model.setPid(cursor.getString(indexPid));
                 model.setHeader(cursor.getString(indexHeader));
                 model.setProfile(cursor.getString(indexProfile));

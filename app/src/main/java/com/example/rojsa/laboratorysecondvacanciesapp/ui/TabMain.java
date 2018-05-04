@@ -7,7 +7,7 @@ public class TabMain {
     private final Fragment mFragment;
     private final CharSequence mTitle;
 
-    public TabMain(Fragment mFragment, CharSequence title) {
+    TabMain(Fragment mFragment, CharSequence title) {
         this.mFragment = mFragment;
         this.mTitle = title;
     }

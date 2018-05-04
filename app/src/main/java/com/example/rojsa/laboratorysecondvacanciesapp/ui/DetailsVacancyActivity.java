@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,18 +19,20 @@ import android.widget.TextView;
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.StartApplication;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
-import com.example.rojsa.laboratorysecondvacanciesapp.model.AllDayModel;
+import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailsVacancyActivity extends BaseActivity implements View.OnClickListener {
     private TextView mTvTitleDetails, mTvJob, mTvDate, mTvSalary, mTvSite, mTvPhoneNumber, mTvDetailVacancy;
-    private List<AllDayModel> mListVacancy;
+    private CheckBox mCheckBox;
+    private List<VacanciesModel> mListVacancy;
     private int mPos;
     private AppCompatButton mBtnCall;
-    private AllDayModel mModelVacancy;
     private LinearLayout mBtnPrev, mBtnNext;
+    private SQLiteHelper mSQLiteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +42,13 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         setSupportActionBar(toolbar);
 
         createDrawer(toolbar);
-
+        mSQLiteHelper = StartApplication.get(this).getSqLiteHelper();
         initViewElement();
         writeData();
     }
 
     private void initViewElement() {
         Intent intent = getIntent();
-//        mModelVacancy = intent.getParcelableExtra("mModelVacancy");
         mPos = intent.getIntExtra("position", 0);
 
         mTvTitleDetails = findViewById(R.id.tvTitleDetails);
@@ -56,6 +58,7 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         mTvSite = findViewById(R.id.tvSite);
         mTvPhoneNumber = findViewById(R.id.tvPhoneNumber);
         mTvDetailVacancy = findViewById(R.id.tvDetailVacancy);
+        mCheckBox = findViewById(R.id.checkbox);
 
         mBtnPrev = findViewById(R.id.btnPrev);
         mBtnNext = findViewById(R.id.btnNext);
@@ -64,46 +67,44 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         mBtnCall.setOnClickListener(this);
         mBtnPrev.setOnClickListener(this);
         mBtnNext.setOnClickListener(this);
+        mCheckBox.setOnClickListener(this);
         getAllDayVacancies();
 
     }
 
 
     private void writeData() {
-        mModelVacancy = mListVacancy.get(mPos);
-        mTvTitleDetails.setText(mModelVacancy.getHeader());
-        mTvJob.setText(mModelVacancy.getProfile());
-        mTvDate.setText(mModelVacancy.getData());
-        mTvSalary.setText(mModelVacancy.getSalary());
-        mTvSite.setText(mModelVacancy.getSiteAddress());
-        mTvDetailVacancy.setText(mModelVacancy.getBody());
+        VacanciesModel modelVacancy = mListVacancy.get(mPos);
+        mTvTitleDetails.setText(modelVacancy.getHeader());
+        mTvJob.setText(modelVacancy.getProfile());
+        mTvDate.setText(modelVacancy.getData());
+        mTvSalary.setText(modelVacancy.getSalary());
+        mTvSite.setText(modelVacancy.getSiteAddress());
+        mTvDetailVacancy.setText(modelVacancy.getBody());
 
-        if (mModelVacancy.getProfile().equals("")) mTvJob.setText(R.string.no_phone_textview);
+        mCheckBox.setChecked(getFavoriteVacancies(modelVacancy));
 
-        if (mModelVacancy.getSalary().equals("")) {
+        if (modelVacancy.getProfile().equals("")) mTvJob.setText(R.string.no_phone_textview);
+
+        if (modelVacancy.getSalary().equals("")) {
             mTvSalary.setText(R.string.no_salary);
         } else {
-            mTvSalary.setText(mModelVacancy.getSalary());
+            mTvSalary.setText(modelVacancy.getSalary());
         }
 
-        if (mModelVacancy.getTelephone().equals("")) {
+        if (modelVacancy.getTelephone().equals("")) {
             mBtnCall.setVisibility(View.GONE);
             mTvPhoneNumber.setText(R.string.no_phone_textview);
         } else {
             mBtnCall.setVisibility(View.VISIBLE);
-
-            mTvPhoneNumber.setText(mModelVacancy.getTelephone());
+            mTvPhoneNumber.setText(modelVacancy.getTelephone());
         }
-
         disableButton();
-        saveIdVacancy(mModelVacancy);
+        saveIdVacancy(modelVacancy);
     }
 
-    private void saveIdVacancy(final AllDayModel model) {
-
-                SQLiteHelper saveID = StartApplication.get(getApplicationContext()).getSqLiteHelper();
-                saveID.saveViewed(model.getPid());
-
+    private void saveIdVacancy(final VacanciesModel model) {
+        mSQLiteHelper.saveViewed(model.getPid());
     }
 
     @Override
@@ -116,7 +117,7 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
 
                 } else {
                     Intent intent = new Intent(Intent.ACTION_DIAL);
-                    intent.setData(Uri.parse("tel: " + tel.replace(".","")));
+                    intent.setData(Uri.parse("tel: " + tel.replace(".", "")));
                     startActivity(intent);
                 }
                 break;
@@ -125,6 +126,13 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.btnNext:
                 nextVacancy();
+                break;
+            case R.id.checkbox:
+                if (mCheckBox.isChecked()) {
+                    saveVacancy(mListVacancy.get(mPos));
+                } else {
+                    deleteVacancy(mListVacancy.get(mPos));
+                }
                 break;
         }
     }
@@ -170,9 +178,41 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         AlertDialog alert = builder.create();
         alert.show();
     }
-    private void getAllDayVacancies(){
-        SQLiteHelper sqLiteHelper = StartApplication.get(getApplicationContext()).getSqLiteHelper();
-        mListVacancy = sqLiteHelper.getAllVacanciesOverDay();
+
+    private void saveVacancy(final VacanciesModel model) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mSQLiteHelper.saveFavoriteVacancy(model);
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+
+    private void deleteVacancy(final VacanciesModel model) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                mSQLiteHelper.deleteFavoriteVacancy(model.getPid());
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+
+    private boolean getFavoriteVacancies(VacanciesModel model) {
+        ArrayList<VacanciesModel> list = (ArrayList<VacanciesModel>) mSQLiteHelper.getFavoriteVacancy();
+        if (list == null) return false;
+        for (int i = 0; i < list.size(); i++) {
+            if (model.getPid().equals(list.get(i).getPid()))
+                return true;
+        }
+        return false;
+    }
+
+    private void getAllDayVacancies() {
+        mListVacancy = mSQLiteHelper.getAllVacanciesOverDay();
     }
 
 

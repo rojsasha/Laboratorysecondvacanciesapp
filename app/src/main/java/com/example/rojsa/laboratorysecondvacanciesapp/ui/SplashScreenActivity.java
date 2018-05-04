@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.StartApplication;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.RequestInterface;
-import com.example.rojsa.laboratorysecondvacanciesapp.model.AllDayModel;
+import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,12 +53,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),"internet good",Toast.LENGTH_SHORT).show();
         RequestInterface service = StartApplication.get(getApplicationContext()).getService();
         service.getAllVacancies("au", "get_all_vacancies", "20", "1")
-                .enqueue(new Callback<List<AllDayModel>>() {
+                .enqueue(new Callback<List<VacanciesModel>>() {
                     @Override
-                    public void onResponse(Call<List<AllDayModel>> call, Response<List<AllDayModel>> response) {
+                    public void onResponse(@NonNull Call<List<VacanciesModel>> call, @NonNull Response<List<VacanciesModel>> response) {
 
                         Intent intent = new Intent(SplashScreenActivity.this, MainActivity.class);
-                        List<AllDayModel> list = response.body();
+                        List<VacanciesModel> list = response.body();
                         intent.putParcelableArrayListExtra("listVacancy", (ArrayList<? extends Parcelable>) list);
                         Toast.makeText(getApplicationContext(),"internet down",Toast.LENGTH_SHORT).show();
                         mProgressBar.setVisibility(View.INVISIBLE);
@@ -67,7 +67,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<List<AllDayModel>> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<List<VacanciesModel>> call, @NonNull Throwable t) {
                         Toast.makeText(getApplicationContext(),"internet good" + t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
                     }
                 });

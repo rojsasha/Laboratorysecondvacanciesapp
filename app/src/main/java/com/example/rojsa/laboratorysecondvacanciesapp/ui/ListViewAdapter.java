@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.StartApplication;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
-import com.example.rojsa.laboratorysecondvacanciesapp.model.AllDayModel;
+import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,9 +32,9 @@ import java.util.Locale;
 public class ListViewAdapter extends ArrayAdapter {
     private SQLiteHelper mSqLiteHelper = StartApplication.get(getContext()).getSqLiteHelper();
     private boolean[] mCheckedState;
-     private List<AllDayModel> mList;
+     private List<VacanciesModel> mList;
 
-    public ListViewAdapter(@NonNull Context context, List<AllDayModel> list) {
+    ListViewAdapter(@NonNull Context context, List<VacanciesModel> list) {
         super(context, 0, list);
         mCheckedState = new boolean[list.size()];
         this.mList = list;
@@ -45,6 +45,7 @@ public class ListViewAdapter extends ArrayAdapter {
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         final ViewHolder holder;
+        getFavoriteVacancy();
         if (convertView == null) {
             holder = new ViewHolder();
 
@@ -61,7 +62,9 @@ public class ListViewAdapter extends ArrayAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        final AllDayModel model = (AllDayModel) getItem(position);
+
+        final VacanciesModel model = (VacanciesModel) getItem(position);
+
         holder.tvDate.setText(formatData(model.getData()));
         holder.tvJob.setText(model.getHeader());
         holder.tvTitleCardView.setText(model.getProfession());
@@ -88,7 +91,7 @@ public class ListViewAdapter extends ArrayAdapter {
 
             }
         });
-
+        getFavoriteVacancy();
         holder.checkBox.setChecked(mCheckedState[position]);
         if (model.getSalary().equals("")) holder.tvSalary.setText(R.string.no_salary);
         if (setViewed(model.getPid())) {
@@ -97,7 +100,7 @@ public class ListViewAdapter extends ArrayAdapter {
         return convertView;
     }
 
-    private void saveVacancy(final AllDayModel model) {
+    private void saveVacancy(final VacanciesModel model) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -108,7 +111,7 @@ public class ListViewAdapter extends ArrayAdapter {
         thread.start();
     }
 
-    private void deleteVacancy(final AllDayModel model) {
+    private void deleteVacancy(final VacanciesModel model) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -144,6 +147,20 @@ public class ListViewAdapter extends ArrayAdapter {
             }
         }
         return false;
+    }
+
+    private void getFavoriteVacancy(){
+        ArrayList<VacanciesModel> list = (ArrayList<VacanciesModel>) mSqLiteHelper.getFavoriteVacancy();
+        if (list!= null){
+            for (int i = 0; i < mList.size(); i++) {
+                for (int j = 0; j < list.size(); j++) {
+                    if (mList.get(i).getPid().equals(list.get(j).getPid())){
+                        mCheckedState[i] = true;
+                    }
+                }
+
+            }
+        }
     }
 
 

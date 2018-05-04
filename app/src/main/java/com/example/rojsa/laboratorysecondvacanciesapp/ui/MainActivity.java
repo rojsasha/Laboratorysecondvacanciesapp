@@ -5,18 +5,15 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.widget.ListView;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
-import com.example.rojsa.laboratorysecondvacanciesapp.data.FragmentCallBack;
-import com.example.rojsa.laboratorysecondvacanciesapp.data.RequestInterface;
-import com.example.rojsa.laboratorysecondvacanciesapp.model.AllDayModel;
+import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements FragmentCallBack {
-    private List<AllDayModel> mList;
+    private List<VacanciesModel> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +39,7 @@ public class MainActivity extends BaseActivity implements FragmentCallBack {
     }
 
     @Override
-    public List<AllDayModel> getAllVacancies() {
+    public List<VacanciesModel> getAllVacancies() {
         return mList;
     }
 }

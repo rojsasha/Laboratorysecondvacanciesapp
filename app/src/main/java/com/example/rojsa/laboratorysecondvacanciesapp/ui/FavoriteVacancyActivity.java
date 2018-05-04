@@ -8,7 +8,7 @@ import android.widget.ListView;
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.StartApplication;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
-import com.example.rojsa.laboratorysecondvacanciesapp.model.AllDayModel;
+import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class FavoriteVacancyActivity extends BaseActivity {
 
     private void getFavoriteData(){
         ListView listView = findViewById(R.id.recycleView);
-        List<AllDayModel> list = mSQLiteHelper.getFavoriteVacancy();
+        List<VacanciesModel> list = mSQLiteHelper.getFavoriteVacancy();
         if (list.isEmpty())return;
         ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(),list);
         listView.setAdapter(adapter);

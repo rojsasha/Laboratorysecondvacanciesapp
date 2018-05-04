@@ -1,11 +1,9 @@
 package com.example.rojsa.laboratorysecondvacanciesapp.ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -22,7 +20,6 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
-
 
 
     protected void createDrawer(Toolbar toolbar) {
@@ -49,9 +46,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         Drawer.OnDrawerItemClickListener click = new Drawer.OnDrawerItemClickListener() {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                switch (position){
+                switch (position) {
                     case 2:
-                        Intent intent = new Intent(getApplicationContext(),FavoriteVacancyActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), FavoriteVacancyActivity.class);
                         startActivity(intent);
                         break;
                 }
@@ -59,7 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         };
 
-        Drawer drawer = new DrawerBuilder()
+        new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withAccountHeader(header)
@@ -73,10 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .build();
 
 
-
-
     }
-
 
 
 }

@@ -17,11 +17,11 @@ import android.widget.Toast;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.StartApplication;
-import com.example.rojsa.laboratorysecondvacanciesapp.data.FragmentCallBack;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.RequestInterface;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
-import com.example.rojsa.laboratorysecondvacanciesapp.model.AllDayModel;
+import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,11 +34,10 @@ import retrofit2.Response;
 
 
 public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
-    private RequestInterface mService;
     private ListView mListView;
     private SwipeRefreshLayout mRefreshLayout;
-    private List<AllDayModel> listVacancy;
-    private int mRefreshLimit = 20;
+    private List<VacanciesModel> mListVacancy;
+    private int mRefreshLimit = 1;
     private SQLiteHelper mSQLiteHelper;
     private FragmentCallBack mCallBack;
 
@@ -60,28 +59,29 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (mCallBack.getAllVacancies() == null) {
-            listVacancy = mSQLiteHelper.getAllVacanciesOverDay();
-            ListViewAdapter adapter = new ListViewAdapter(getContext(), listVacancy);
+            mListVacancy = mSQLiteHelper.getAllVacanciesOverDay();
+            ListViewAdapter adapter = new ListViewAdapter(getContext(), mListVacancy);
             mListView.setAdapter(adapter);
             Toast.makeText(getContext(), "Нет подключения к интернету", Toast.LENGTH_SHORT).show();
         } else {
-            listVacancy = mCallBack.getAllVacancies();
-            ListViewAdapter adapter = new ListViewAdapter(getContext(), listVacancy);
+            mListVacancy = mCallBack.getAllVacancies();
+            ListViewAdapter adapter = new ListViewAdapter(getContext(), mListVacancy);
             mListView.setAdapter(adapter);
             saveVacanciesOverDay();
         }
     }
 
     private void getData() {
-
-        mService = StartApplication.get(getContext()).getService();
-        mService.getAllVacancies("au", "get_all_vacancies", String.valueOf(mRefreshLimit), "1")
-                .enqueue(new Callback<List<AllDayModel>>() {
+        RequestInterface mService = StartApplication.get(getContext()).getService();
+        mService.getAllVacancies("au", "get_all_vacancies", "20", String.valueOf(mRefreshLimit))
+                .enqueue(new Callback<List<VacanciesModel>>() {
                     @Override
-                    public void onResponse(@NonNull Call<List<AllDayModel>> call, @NonNull Response<List<AllDayModel>> response) {
+                    public void onResponse(@NonNull Call<List<VacanciesModel>> call, @NonNull Response<List<VacanciesModel>> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            listVacancy = response.body();
-                            ListViewAdapter adapter = new ListViewAdapter(getContext(), listVacancy);
+
+                            mListVacancy.addAll(response.body());
+
+                            ListViewAdapter adapter = new ListViewAdapter(getContext(), mListVacancy);
                             mListView.setAdapter(adapter);
                             mRefreshLayout.setRefreshing(false);
                             saveVacanciesOverDay();
@@ -89,7 +89,7 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
                     }
 
                     @Override
-                    public void onFailure(@NonNull Call<List<AllDayModel>> call, @NonNull Throwable t) {
+                    public void onFailure(@NonNull Call<List<VacanciesModel>> call, @NonNull Throwable t) {
 
                     }
                 });
@@ -97,20 +97,19 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
 
     @Override
     public void onRefresh() {
-        mRefreshLimit = mRefreshLimit + 20;
+        mRefreshLimit += 1;
         getData();
 
     }
 
     private void saveVacanciesOverDay() {
-        mSQLiteHelper.saveAllVacanciesOverDay(listVacancy);
+        mSQLiteHelper.saveAllVacanciesOverDay(mListVacancy);
     }
-
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Intent intent = new Intent(getContext(), DetailsVacancyActivity.class);
-        intent.putExtra("modelVacancy", listVacancy.get(position));
+        intent.putExtra("modelVacancy", mListVacancy.get(position));
         intent.putExtra("position", position);
         startActivity(intent);
     }

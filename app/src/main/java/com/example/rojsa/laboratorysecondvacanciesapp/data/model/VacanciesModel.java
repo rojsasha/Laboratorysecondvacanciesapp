@@ -1,5 +1,5 @@
 
-package com.example.rojsa.laboratorysecondvacanciesapp.model;
+package com.example.rojsa.laboratorysecondvacanciesapp.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,11 +7,9 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
+public class VacanciesModel implements Parcelable {
 
-public class AllDayModel implements Parcelable {
-
-    public AllDayModel() {
+    public VacanciesModel() {
     }
 
     @SerializedName("id")
@@ -75,7 +73,7 @@ public class AllDayModel implements Parcelable {
     @Expose
     private String paid;
 
-    protected AllDayModel(Parcel in) {
+    protected VacanciesModel(Parcel in) {
         pid = in.readString();
         header = in.readString();
         profile = in.readString();
@@ -98,15 +96,15 @@ public class AllDayModel implements Parcelable {
         paid = in.readString();
     }
 
-    public static final Creator<AllDayModel> CREATOR = new Creator<AllDayModel>() {
+    public static final Creator<VacanciesModel> CREATOR = new Creator<VacanciesModel>() {
         @Override
-        public AllDayModel createFromParcel(Parcel in) {
-            return new AllDayModel(in);
+        public VacanciesModel createFromParcel(Parcel in) {
+            return new VacanciesModel(in);
         }
 
         @Override
-        public AllDayModel[] newArray(int size) {
-            return new AllDayModel[size];
+        public VacanciesModel[] newArray(int size) {
+            return new VacanciesModel[size];
         }
     };
 
