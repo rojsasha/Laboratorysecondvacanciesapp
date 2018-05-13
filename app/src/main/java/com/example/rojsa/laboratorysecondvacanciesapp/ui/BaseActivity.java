@@ -29,7 +29,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     Drawer drawer;
     AccountHeader header;
 
-
     private String packageInfo() {
         PackageInfo pInfo = null;
         try {
@@ -37,7 +36,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
         return String.format(getString(R.string.header_version_program), pInfo.versionName);
     }
 
@@ -54,13 +52,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .withTranslucentStatusBar(true)
                 .withSelectionListEnabledForSingleProfile(false)
                 .build();
-
     }
 
     protected void createDrawer(Toolbar toolbar, boolean b) {
 
         createAccountHeader();
-
         PrimaryDrawerItem search = new PrimaryDrawerItem().withName(R.string.drawer_search_item).withIdentifier(1).withIcon(R.drawable.ic_search_grey);
         PrimaryDrawerItem vacancies = new PrimaryDrawerItem().withName(R.string.drawer_item_best_vacancies).withIdentifier(2).withIcon(R.drawable.ic_search_grey);
         PrimaryDrawerItem about = new PrimaryDrawerItem().withName(R.string.drawer_item_about).withIdentifier(3).withIcon(R.drawable.ic_search_grey);
@@ -70,9 +66,15 @@ public abstract class BaseActivity extends AppCompatActivity {
             @Override
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 switch (position) {
+                    case 1:
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        break;
                     case 2:
-                        Intent intent = new Intent(getApplicationContext(), FavoriteVacancyActivity.class);
-                        startActivity(intent);
+                        startActivity(new Intent(getApplicationContext(), FavoriteVacancyActivity.class));
+                        break;
+                    case android.R.id.home:
+                        onBackPressed();
+                        Toast.makeText(getApplicationContext(), "123", Toast.LENGTH_LONG).show();
                         break;
                 }
                 return false;
@@ -82,6 +84,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         drawer = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
+                .withSelectedItem(-1)
+                .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
+                    @Override
+                    public boolean onNavigationClickListener(View clickedView) {
+                        onBackPressed();
+                        return true;
+                    }
+                })
                 .withAccountHeader(header)
                 .withOnDrawerItemClickListener(click)
                 .addDrawerItems(
@@ -100,28 +110,5 @@ public abstract class BaseActivity extends AppCompatActivity {
             drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                Toast.makeText(getApplicationContext(),"123",Toast.LENGTH_LONG).show();
-                return true;
-
-
-
-            default:
-                Toast.makeText(getApplicationContext(),"456",Toast.LENGTH_LONG).show();
-                return super.onOptionsItemSelected(item);
-
-        }
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }

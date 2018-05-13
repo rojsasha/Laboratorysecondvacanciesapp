@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -41,8 +42,11 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.activity_details_vacancy);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Вакансии");
-        createDrawer(toolbar,false);
+        createDrawer(toolbar, false);
+
         mSQLiteHelper = StartApplication.get(this).getSqLiteHelper();
         initViewElement();
         writeData();
@@ -72,7 +76,6 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         getAllDayVacancies();
 
     }
-
 
     private void writeData() {
         VacanciesModel modelVacancy = mListVacancy.get(mPos);
@@ -130,10 +133,10 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.checkbox:
                 if (mCheckBox.isChecked()) {
-                    Toast.makeText(getApplicationContext(),mListVacancy.get(mPos).getPid(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), mListVacancy.get(mPos).getPid(), Toast.LENGTH_LONG).show();
                     saveVacancy(mListVacancy.get(mPos));
                 } else {
-                    Toast.makeText(getApplicationContext(),mListVacancy.get(mPos).getPid(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), mListVacancy.get(mPos).getPid(), Toast.LENGTH_LONG).show();
                     deleteVacancy(mListVacancy.get(mPos));
                 }
                 break;
