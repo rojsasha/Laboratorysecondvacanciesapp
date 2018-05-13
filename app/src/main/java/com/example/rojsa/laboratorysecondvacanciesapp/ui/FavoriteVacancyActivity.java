@@ -18,8 +18,11 @@ public class FavoriteVacancyActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_vacancies_over_day);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
-        createDrawer(toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Избранные вакансии");
+        createDrawer(toolbar,false);
         mSQLiteHelper = StartApplication.get(getApplicationContext()).getSqLiteHelper();
         getFavoriteData();
     }

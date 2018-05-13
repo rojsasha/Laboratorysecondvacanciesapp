@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
@@ -40,8 +41,8 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.activity_details_vacancy);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        createDrawer(toolbar);
+        getSupportActionBar().setTitle("Вакансии");
+        createDrawer(toolbar,false);
         mSQLiteHelper = StartApplication.get(this).getSqLiteHelper();
         initViewElement();
         writeData();
@@ -129,8 +130,10 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.checkbox:
                 if (mCheckBox.isChecked()) {
+                    Toast.makeText(getApplicationContext(),mListVacancy.get(mPos).getPid(),Toast.LENGTH_LONG).show();
                     saveVacancy(mListVacancy.get(mPos));
                 } else {
+                    Toast.makeText(getApplicationContext(),mListVacancy.get(mPos).getPid(),Toast.LENGTH_LONG).show();
                     deleteVacancy(mListVacancy.get(mPos));
                 }
                 break;

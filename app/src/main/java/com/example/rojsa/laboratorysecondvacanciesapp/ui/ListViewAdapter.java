@@ -153,6 +153,7 @@ public class ListViewAdapter extends ArrayAdapter {
         ArrayList<VacanciesModel> list = (ArrayList<VacanciesModel>) mSqLiteHelper.getFavoriteVacancy();
         if (list!= null){
             for (int i = 0; i < mList.size(); i++) {
+                mCheckedState[i] = false;
                 for (int j = 0; j < list.size(); j++) {
                     if (mList.get(i).getPid().equals(list.get(j).getPid())){
                         mCheckedState[i] = true;
@@ -162,7 +163,6 @@ public class ListViewAdapter extends ArrayAdapter {
             }
         }
     }
-
 
     class ViewHolder {
         TextView tvDate, tvTitleCardView, tvSalary, tvJob;

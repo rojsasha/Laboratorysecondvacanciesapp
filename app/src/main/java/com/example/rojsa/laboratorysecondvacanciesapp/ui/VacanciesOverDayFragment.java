@@ -20,8 +20,6 @@ import com.example.rojsa.laboratorysecondvacanciesapp.StartApplication;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.RequestInterface;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,7 +30,6 @@ import retrofit2.Response;
  * Created by rojsa on 15.04.2018.
  */
 
-
 public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
     private ListView mListView;
     private SwipeRefreshLayout mRefreshLayout;
@@ -40,6 +37,7 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
     private int mRefreshLimit = 1;
     private SQLiteHelper mSQLiteHelper;
     private FragmentCallBack mCallBack;
+    private ListViewAdapter mAdapter;
 
     @Nullable
     @Override
@@ -60,13 +58,13 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
         super.onViewCreated(view, savedInstanceState);
         if (mCallBack.getAllVacancies() == null) {
             mListVacancy = mSQLiteHelper.getAllVacanciesOverDay();
-            ListViewAdapter adapter = new ListViewAdapter(getContext(), mListVacancy);
-            mListView.setAdapter(adapter);
+            mAdapter = new ListViewAdapter(getContext(), mListVacancy);
+            mListView.setAdapter(mAdapter);
             Toast.makeText(getContext(), "Нет подключения к интернету", Toast.LENGTH_SHORT).show();
         } else {
             mListVacancy = mCallBack.getAllVacancies();
-            ListViewAdapter adapter = new ListViewAdapter(getContext(), mListVacancy);
-            mListView.setAdapter(adapter);
+            mAdapter = new ListViewAdapter(getContext(), mListVacancy);
+            mListView.setAdapter(mAdapter);
             saveVacanciesOverDay();
         }
     }
@@ -81,8 +79,8 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
 
                             mListVacancy.addAll(response.body());
 
-                            ListViewAdapter adapter = new ListViewAdapter(getContext(), mListVacancy);
-                            mListView.setAdapter(adapter);
+                            mAdapter = new ListViewAdapter(getContext(), mListVacancy);
+                            mListView.setAdapter(mAdapter);
                             mRefreshLayout.setRefreshing(false);
                             saveVacanciesOverDay();
                         }
@@ -100,6 +98,12 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
         mRefreshLimit += 1;
         getData();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
     }
 
     private void saveVacanciesOverDay() {
