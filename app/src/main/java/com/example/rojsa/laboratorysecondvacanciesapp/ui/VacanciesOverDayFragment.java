@@ -20,6 +20,7 @@ import com.example.rojsa.laboratorysecondvacanciesapp.StartApplication;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.RequestInterface;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -75,7 +76,7 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
                 .enqueue(new Callback<List<VacanciesModel>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<VacanciesModel>> call, @NonNull Response<List<VacanciesModel>> response) {
-                        if (response.isSuccessful() && response.body() != null) {
+                        if (response.body() != null && response.isSuccessful()) {
 
                             mListVacancy.addAll(response.body());
 
@@ -88,6 +89,8 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
 
                     @Override
                     public void onFailure(@NonNull Call<List<VacanciesModel>> call, @NonNull Throwable t) {
+                        mRefreshLayout.setRefreshing(false);
+                        Toast.makeText(getContext(), "Нет подключения к интернету", Toast.LENGTH_SHORT).show();
 
                     }
                 });

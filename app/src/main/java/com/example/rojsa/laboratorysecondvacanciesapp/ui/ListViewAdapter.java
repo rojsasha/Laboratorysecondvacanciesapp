@@ -32,7 +32,7 @@ import java.util.Locale;
 public class ListViewAdapter extends ArrayAdapter {
     private SQLiteHelper mSqLiteHelper = StartApplication.get(getContext()).getSqLiteHelper();
     private boolean[] mCheckedState;
-     private List<VacanciesModel> mList;
+    private List<VacanciesModel> mList;
 
     ListViewAdapter(@NonNull Context context, List<VacanciesModel> list) {
         super(context, 0, list);
@@ -57,7 +57,6 @@ public class ListViewAdapter extends ArrayAdapter {
             holder.checkBox = convertView.findViewById(R.id.checkbox);
             holder.layoutViewed = convertView.findViewById(R.id.layoutViewed);
 
-
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -65,6 +64,7 @@ public class ListViewAdapter extends ArrayAdapter {
 
         final VacanciesModel model = (VacanciesModel) getItem(position);
 
+        assert model != null;
         holder.tvDate.setText(formatData(model.getData()));
         holder.tvJob.setText(model.getHeader());
         holder.tvTitleCardView.setText(model.getProfession());
@@ -149,13 +149,13 @@ public class ListViewAdapter extends ArrayAdapter {
         return false;
     }
 
-    private void getFavoriteVacancy(){
+    private void getFavoriteVacancy() {
         ArrayList<VacanciesModel> list = (ArrayList<VacanciesModel>) mSqLiteHelper.getFavoriteVacancy();
-        if (list!= null){
+        if (list != null) {
             for (int i = 0; i < mList.size(); i++) {
                 mCheckedState[i] = false;
                 for (int j = 0; j < list.size(); j++) {
-                    if (mList.get(i).getPid().equals(list.get(j).getPid())){
+                    if (mList.get(i).getPid().equals(list.get(j).getPid())) {
                         mCheckedState[i] = true;
                     }
                 }

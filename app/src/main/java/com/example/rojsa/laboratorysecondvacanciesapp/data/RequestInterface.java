@@ -18,5 +18,10 @@ public interface RequestInterface {
     Call<List<VacanciesModel>> getAllVacancies(@Field("login") String login,
                                                @Field("f") String f,
                                                @Field("limit") String limit,
+                                               @Field("page") String page);@FormUrlEncoded
+    @POST(Constants.ENDPOINT)
+    Call<List<VacanciesModel>> getSearchVacancies(@Field("login") String login,
+                                               @Field("f") String f,
+                                               @Field("limit") String limit,
                                                @Field("page") String page);
 }

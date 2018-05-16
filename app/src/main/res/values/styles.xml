@@ -16,7 +16,7 @@
         <item name="colorControlActivated">#000</item> <!-- activated color change as you wish -->
     </style>
     <style name="radioButton">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
     <style name="toolBarStyle" parent="Theme.AppCompat">
         <item name="android:background">@color/colorPrimary</item>

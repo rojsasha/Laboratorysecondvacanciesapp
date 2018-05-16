@@ -24,8 +24,12 @@ import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DetailsVacancyActivity extends BaseActivity implements View.OnClickListener {
     private TextView mTvTitleDetails, mTvJob, mTvDate, mTvSalary, mTvSite, mTvPhoneNumber, mTvDetailVacancy;
@@ -81,7 +85,7 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         VacanciesModel modelVacancy = mListVacancy.get(mPos);
         mTvTitleDetails.setText(modelVacancy.getHeader());
         mTvJob.setText(modelVacancy.getProfile());
-        mTvDate.setText(modelVacancy.getData());
+        mTvDate.setText(formatData(modelVacancy.getData()));
         mTvSalary.setText(modelVacancy.getSalary());
         mTvSite.setText(modelVacancy.getSiteAddress());
         mTvDetailVacancy.setText(modelVacancy.getBody());
@@ -159,7 +163,21 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         writeData();
         saveIdVacancy(mListVacancy.get(mPos));
     }
-
+    private String formatData(String data) {
+        String inputPattern = "yyyy-MM-dd HH:mm:ss";
+        String outputPattern = "HH:mm dd MMM yyyy";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern, Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern, Locale.getDefault());
+        Date date;
+        String str = null;
+        try {
+            date = inputFormat.parse(data);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
     private void nextVacancy() {
         mPos += 1;
         disableButton();
