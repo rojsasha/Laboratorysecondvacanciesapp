@@ -10,18 +10,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
-import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class SearchDialog extends DialogFragment implements View.OnClickListener {
     private RadioButton mRbModeAny, mRbModeFullDay, mRbModeFlexible, mRbModeRemotely, mRbModeNight, mRbSalaryAny, mRbSalaryFive, mRbSalaryTen, mRbSalaryThirty;
     private CompoundButton mPreviousModeCompoundButton, mPreviousSalaryCompoundButton;
-    private Button btnClear, btnSearch;
-    private List<VacanciesModel> mVacancieslList;
+    private String[] mSalaryArray, mModeArray;
+    private int mModePosition,mSalaryPosition;
+    private ArrayList<String> mSalaryModeList;
+
 
     @Nullable
     @Override
@@ -32,14 +36,18 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
         mRbModeFlexible = view.findViewById(R.id.rbModeFlexible);
         mRbModeRemotely = view.findViewById(R.id.rbModeRemotely);
         mRbModeNight = view.findViewById(R.id.rbModeNight);
+        mSalaryModeList = new ArrayList<>();
+
+        mModeArray = getResources().getStringArray(R.array.rbMode);
+        mSalaryArray = getResources().getStringArray(R.array.rbSalary);
 
         mRbSalaryAny = view.findViewById(R.id.rbSalaryAny);
         mRbSalaryFive = view.findViewById(R.id.rbSalaryFive);
         mRbSalaryTen = view.findViewById(R.id.rbSalaryTen);
         mRbSalaryThirty = view.findViewById(R.id.rbSalaryThirty);
 
-        btnSearch = view.findViewById(R.id.btnSearch);
-        btnClear = view.findViewById(R.id.btnClear);
+        Button btnSearch = view.findViewById(R.id.btnSearch);
+        Button btnClear = view.findViewById(R.id.btnClear);
 
         btnSearch.setOnClickListener(this);
         btnClear.setOnClickListener(this);
@@ -63,6 +71,9 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setDefaultRadioButtons();
+        setTagRadioButton();
+        Toast.makeText(getContext(),mModeArray[1] + "", Toast.LENGTH_SHORT).show();
+
 
     }
 
@@ -70,8 +81,13 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             if (mPreviousModeCompoundButton != null) {
+
+                Toast.makeText(getContext(),compoundButton.getTag() + "", Toast.LENGTH_SHORT).show();
                 mPreviousModeCompoundButton.setChecked(false);
                 mPreviousModeCompoundButton = compoundButton;
+                mModePosition = (int) compoundButton.getTag();
+
+
             } else {
                 mPreviousModeCompoundButton = compoundButton;
             }
@@ -81,10 +97,13 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
         @Override
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             if (mPreviousSalaryCompoundButton != null) {
+
                 mPreviousSalaryCompoundButton.setChecked(false);
                 mPreviousSalaryCompoundButton = compoundButton;
+                mSalaryPosition = (int) compoundButton.getTag();
             } else {
                 mPreviousSalaryCompoundButton = compoundButton;
+
             }
         }
     };
@@ -101,11 +120,31 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
                 setDefaultRadioButtons();
                 break;
             case R.id.btnSearch:
-
+                mSalaryModeList.add(mModeArray[mModePosition]);
+                mSalaryModeList.add(mSalaryArray[mSalaryPosition]);
+                EventBus.getDefault().post(mSalaryModeList);
+                dismiss();
                 break;
         }
     }
-    private void getData(){
 
+    private void setTagRadioButton(){
+        mRbModeAny.setTag(0);
+        mRbModeFullDay.setTag(1);
+        mRbModeFlexible.setTag(2);
+        mRbModeRemotely.setTag(3);
+        mRbModeNight.setTag(4);
+
+        mRbSalaryAny.setTag(0);
+        mRbSalaryFive.setTag(1);
+        mRbSalaryTen.setTag(2);
+        mRbSalaryThirty.setTag(3);
+
+    }
+
+    ArrayList<String> getFilterData(){
+        ArrayList<String> list = new ArrayList<>();
+
+        return list;
     }
 }

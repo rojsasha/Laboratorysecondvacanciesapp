@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity implements FragmentCallBack, View.OnClickListener {
     private List<VacanciesModel> mList;
-
+    private ArrayList<String> mSalary;
 
 
 
@@ -30,9 +31,10 @@ public class MainActivity extends BaseActivity implements FragmentCallBack, View
         ImageButton btnSearch = findViewById(R.id.btnSearch);
         btnSearch.setOnClickListener(this);
         setSupportActionBar(toolbar);
-        createDrawer(toolbar,true);
+        createDrawer(toolbar, true);
         Intent intent = getIntent();
         mList = intent.getParcelableArrayListExtra("listVacancy");
+        mSalary = new ArrayList<>();
 
     }
 
@@ -52,8 +54,26 @@ public class MainActivity extends BaseActivity implements FragmentCallBack, View
     }
 
     @Override
+    public void saveSearchByRubrics(String salary) {
+        mSalary.add(salary);
+    }
+
+    @Override
+    public ArrayList<String> getSearchVacancies() {
+        //TODO проверить работоспособность
+        return mSalary;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(getApplicationContext(), "resume main activity", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void onClick(View view) {
         SearchDialog dialog = new SearchDialog();
-        dialog.show(getSupportFragmentManager(),"search");
+        dialog.show(getSupportFragmentManager(), "search");
     }
+
 }

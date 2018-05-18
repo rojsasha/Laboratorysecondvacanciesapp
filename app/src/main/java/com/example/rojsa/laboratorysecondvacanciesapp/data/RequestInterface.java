@@ -11,17 +11,20 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 
-
 public interface RequestInterface {
     @FormUrlEncoded
     @POST(Constants.ENDPOINT)
     Call<List<VacanciesModel>> getAllVacancies(@Field("login") String login,
                                                @Field("f") String f,
                                                @Field("limit") String limit,
-                                               @Field("page") String page);@FormUrlEncoded
+                                               @Field("page") String page);
+
+    @FormUrlEncoded
     @POST(Constants.ENDPOINT)
     Call<List<VacanciesModel>> getSearchVacancies(@Field("login") String login,
-                                               @Field("f") String f,
-                                               @Field("limit") String limit,
-                                               @Field("page") String page);
+                                                  @Field("f") String f,
+                                                  @Field("limit") String limit,
+                                                  @Field("page") String page,
+                                                  @Field("salary") String salary,
+                                                  @Field("term") String term);
 }

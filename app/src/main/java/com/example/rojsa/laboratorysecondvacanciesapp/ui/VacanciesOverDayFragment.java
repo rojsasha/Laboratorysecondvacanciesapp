@@ -21,6 +21,11 @@ import com.example.rojsa.laboratorysecondvacanciesapp.data.RequestInterface;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,7 +36,8 @@ import retrofit2.Response;
  * Created by rojsa on 15.04.2018.
  */
 
-public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
+public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener,
+        AdapterView.OnItemClickListener {
     private ListView mListView;
     private SwipeRefreshLayout mRefreshLayout;
     private List<VacanciesModel> mListVacancy;
@@ -39,6 +45,7 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
     private SQLiteHelper mSQLiteHelper;
     private FragmentCallBack mCallBack;
     private ListViewAdapter mAdapter;
+    private String mSalary = "", mTerm = "";
 
     @Nullable
     @Override
@@ -46,7 +53,7 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
         View view = inflater.inflate(R.layout.fragment_vacancies_over_day, container, false);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setVisibility(View.GONE);
-        mListView = view.findViewById(R.id.recycleView);
+        mListView = view.findViewById(R.id.listView);
         mRefreshLayout = view.findViewById(R.id.refreshLayout);
         mSQLiteHelper = StartApplication.get(getContext()).getSqLiteHelper();
         mRefreshLayout.setOnRefreshListener(this);
@@ -67,19 +74,20 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
             mAdapter = new ListViewAdapter(getContext(), mListVacancy);
             mListView.setAdapter(mAdapter);
             saveVacanciesOverDay();
+
         }
     }
 
     private void getData() {
         RequestInterface mService = StartApplication.get(getContext()).getService();
-        mService.getAllVacancies("au", "get_all_vacancies", "20", String.valueOf(mRefreshLimit))
+        mService.getSearchVacancies("au", "get_post_by_filter", "20", String.valueOf(mRefreshLimit), mSalary,mTerm)
                 .enqueue(new Callback<List<VacanciesModel>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<VacanciesModel>> call, @NonNull Response<List<VacanciesModel>> response) {
                         if (response.body() != null && response.isSuccessful()) {
 
                             mListVacancy.addAll(response.body());
-
+                            Toast.makeText(getContext(), "rerererer", Toast.LENGTH_SHORT).show();
                             mAdapter = new ListViewAdapter(getContext(), mListVacancy);
                             mListView.setAdapter(mAdapter);
                             mRefreshLayout.setRefreshing(false);
@@ -104,9 +112,42 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void filterListener(ArrayList<String> list) {
+        if (!list.isEmpty()) {
+            mTerm = list.get(0);
+            mSalary = list.get(1);
+
+            Toast.makeText(getContext(), mSalary + " " + mTerm, Toast.LENGTH_SHORT).show();
+            mListVacancy.clear();
+            getData();
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+
+    @Override
     public void onResume() {
         super.onResume();
+
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Toast.makeText(getContext(), "onPause", Toast.LENGTH_SHORT).show();
     }
 
     private void saveVacanciesOverDay() {
@@ -126,5 +167,12 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
         super.onAttach(context);
         mCallBack = (FragmentCallBack) context;
 
+
+    }
+
+    @Override
+    public void onAttachFragment(Fragment childFragment) {
+        super.onAttachFragment(childFragment);
+        Toast.makeText(getContext(), "onAttachFragment", Toast.LENGTH_SHORT).show();
     }
 }

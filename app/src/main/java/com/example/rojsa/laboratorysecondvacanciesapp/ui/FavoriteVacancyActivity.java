@@ -30,7 +30,7 @@ public class FavoriteVacancyActivity extends BaseActivity {
 
 
     private void getFavoriteData(){
-        ListView listView = findViewById(R.id.recycleView);
+        ListView listView = findViewById(R.id.listView);
         List<VacanciesModel> list = mSQLiteHelper.getFavoriteVacancy();
         if (list.isEmpty())return;
         ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(),list);
