@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -46,8 +45,7 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.activity_details_vacancy);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar()!= null)
         getSupportActionBar().setTitle("Вакансии");
         createDrawer(toolbar, false);
 
@@ -84,21 +82,20 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
     private void writeData() {
         VacanciesModel modelVacancy = mListVacancy.get(mPos);
         mTvTitleDetails.setText(modelVacancy.getHeader());
-        mTvJob.setText(modelVacancy.getProfile());
+
+        if (!modelVacancy.getProfile().equals(""))
+            mTvJob.setText(modelVacancy.getProfile());
+
         mTvDate.setText(formatData(modelVacancy.getData()));
+
         mTvSalary.setText(modelVacancy.getSalary());
         mTvSite.setText(modelVacancy.getSiteAddress());
         mTvDetailVacancy.setText(modelVacancy.getBody());
 
         mCheckBox.setChecked(getFavoriteVacancies(modelVacancy));
 
-        if (modelVacancy.getProfile().equals("")) mTvJob.setText(R.string.no_phone_textview);
-
-        if (modelVacancy.getSalary().equals("")) {
-            mTvSalary.setText(R.string.no_salary);
-        } else {
+        if (!modelVacancy.getSalary().equals(""))
             mTvSalary.setText(modelVacancy.getSalary());
-        }
 
         if (modelVacancy.getTelephone().equals("")) {
             mBtnCall.setVisibility(View.GONE);
@@ -163,6 +160,7 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         writeData();
         saveIdVacancy(mListVacancy.get(mPos));
     }
+
     private String formatData(String data) {
         String inputPattern = "yyyy-MM-dd HH:mm:ss";
         String outputPattern = "HH:mm dd MMM yyyy";
@@ -178,6 +176,7 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         }
         return str;
     }
+
     private void nextVacancy() {
         mPos += 1;
         disableButton();

@@ -33,12 +33,13 @@ public class ListViewAdapter extends ArrayAdapter {
     private SQLiteHelper mSqLiteHelper = StartApplication.get(getContext()).getSqLiteHelper();
     private boolean[] mCheckedState;
     private List<VacanciesModel> mList;
+    private boolean b;
 
-    ListViewAdapter(@NonNull Context context, List<VacanciesModel> list) {
+    ListViewAdapter(@NonNull Context context, List<VacanciesModel> list,boolean b) {
         super(context, 0, list);
         mCheckedState = new boolean[list.size()];
         this.mList = list;
-
+        this.b = b;
     }
 
     @NonNull
@@ -99,8 +100,10 @@ public class ListViewAdapter extends ArrayAdapter {
         });
         getFavoriteVacancy();
         holder.checkBox.setChecked(mCheckedState[position]);
-        if (setViewed(model.getPid())) {
-            holder.layoutViewed.setVisibility(View.VISIBLE);
+        if (b){
+            if (setViewed(model.getPid())) {
+                holder.layoutViewed.setVisibility(View.VISIBLE);
+            }
         }
         return convertView;
     }

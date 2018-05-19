@@ -23,8 +23,7 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
     private RadioButton mRbModeAny, mRbModeFullDay, mRbModeFlexible, mRbModeRemotely, mRbModeNight, mRbSalaryAny, mRbSalaryFive, mRbSalaryTen, mRbSalaryThirty;
     private CompoundButton mPreviousModeCompoundButton, mPreviousSalaryCompoundButton;
     private String[] mSalaryArray, mModeArray;
-    private int mModePosition,mSalaryPosition;
-    private ArrayList<String> mSalaryModeList;
+    private int mModePosition, mSalaryPosition;
 
 
     @Nullable
@@ -36,7 +35,7 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
         mRbModeFlexible = view.findViewById(R.id.rbModeFlexible);
         mRbModeRemotely = view.findViewById(R.id.rbModeRemotely);
         mRbModeNight = view.findViewById(R.id.rbModeNight);
-        mSalaryModeList = new ArrayList<>();
+
 
         mModeArray = getResources().getStringArray(R.array.rbMode);
         mSalaryArray = getResources().getStringArray(R.array.rbSalary);
@@ -72,7 +71,7 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
         super.onViewCreated(view, savedInstanceState);
         setDefaultRadioButtons();
         setTagRadioButton();
-        Toast.makeText(getContext(),mModeArray[1] + "", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), mModeArray[1] + "", Toast.LENGTH_SHORT).show();
 
 
     }
@@ -82,7 +81,7 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             if (mPreviousModeCompoundButton != null) {
 
-                Toast.makeText(getContext(),compoundButton.getTag() + "", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), compoundButton.getTag() + "", Toast.LENGTH_SHORT).show();
                 mPreviousModeCompoundButton.setChecked(false);
                 mPreviousModeCompoundButton = compoundButton;
                 mModePosition = (int) compoundButton.getTag();
@@ -120,6 +119,7 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
                 setDefaultRadioButtons();
                 break;
             case R.id.btnSearch:
+                ArrayList<String> mSalaryModeList = new ArrayList<>();
                 mSalaryModeList.add(mModeArray[mModePosition]);
                 mSalaryModeList.add(mSalaryArray[mSalaryPosition]);
                 EventBus.getDefault().post(mSalaryModeList);
@@ -128,7 +128,7 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
         }
     }
 
-    private void setTagRadioButton(){
+    private void setTagRadioButton() {
         mRbModeAny.setTag(0);
         mRbModeFullDay.setTag(1);
         mRbModeFlexible.setTag(2);
@@ -140,11 +140,5 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
         mRbSalaryTen.setTag(2);
         mRbSalaryThirty.setTag(3);
 
-    }
-
-    ArrayList<String> getFilterData(){
-        ArrayList<String> list = new ArrayList<>();
-
-        return list;
     }
 }

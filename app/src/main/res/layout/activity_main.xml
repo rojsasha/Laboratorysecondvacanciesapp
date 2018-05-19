@@ -15,8 +15,9 @@
 
             <ImageButton
                 android:id="@+id/btnSearch"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+
                 android:layout_gravity="right"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/ic_search_grey"

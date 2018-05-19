@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface FragmentCallBack {
     List<VacanciesModel> getAllVacancies();
-    void saveSearchByRubrics(String salary);
-    ArrayList<String> getSearchVacancies();
 
 
 

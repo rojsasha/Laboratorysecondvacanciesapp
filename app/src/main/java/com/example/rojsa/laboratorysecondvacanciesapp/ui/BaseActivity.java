@@ -59,9 +59,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         createAccountHeader();
         PrimaryDrawerItem search = new PrimaryDrawerItem().withName(R.string.drawer_search_item).withIdentifier(1).withIcon(R.drawable.ic_search_grey);
-        PrimaryDrawerItem vacancies = new PrimaryDrawerItem().withName(R.string.drawer_item_best_vacancies).withIdentifier(2).withIcon(R.drawable.ic_search_grey);
-        PrimaryDrawerItem about = new PrimaryDrawerItem().withName(R.string.drawer_item_about).withIdentifier(3).withIcon(R.drawable.ic_search_grey);
-        PrimaryDrawerItem exit = new PrimaryDrawerItem().withName(R.string.drawer_item_exit).withIdentifier(4).withIcon(R.drawable.ic_search_grey);
+        PrimaryDrawerItem vacancies = new PrimaryDrawerItem().withName(R.string.drawer_item_best_vacancies).withIdentifier(2).withIcon(R.drawable.icon_favorite_drawable);
+        PrimaryDrawerItem exit = new PrimaryDrawerItem().withName(R.string.drawer_item_exit).withIdentifier(4).withIcon(R.drawable.icon_exit);
 
         Drawer.OnDrawerItemClickListener click = new Drawer.OnDrawerItemClickListener() {
             @Override
@@ -99,7 +98,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                         search,
                         vacancies,
                         new DividerDrawerItem(),
-                        about,
                         exit)
                 .build();
 
@@ -108,6 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
 
         } else {
+
             drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

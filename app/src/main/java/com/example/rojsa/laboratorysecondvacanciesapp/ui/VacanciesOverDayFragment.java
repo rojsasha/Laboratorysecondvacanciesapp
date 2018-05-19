@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
@@ -45,6 +46,7 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
     private SQLiteHelper mSQLiteHelper;
     private FragmentCallBack mCallBack;
     private ListViewAdapter mAdapter;
+    ProgressBar mProgressBar;
     private String mSalary = "", mTerm = "";
 
     @Nullable
@@ -53,6 +55,7 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
         View view = inflater.inflate(R.layout.fragment_vacancies_over_day, container, false);
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         toolbar.setVisibility(View.GONE);
+        mProgressBar = view.findViewById(R.id.progressBarSearchDialog);
         mListView = view.findViewById(R.id.listView);
         mRefreshLayout = view.findViewById(R.id.refreshLayout);
         mSQLiteHelper = StartApplication.get(getContext()).getSqLiteHelper();
@@ -66,21 +69,27 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
         super.onViewCreated(view, savedInstanceState);
         if (mCallBack.getAllVacancies() == null) {
             mListVacancy = mSQLiteHelper.getAllVacanciesOverDay();
-            mAdapter = new ListViewAdapter(getContext(), mListVacancy);
+            mAdapter = new ListViewAdapter(getContext(), mListVacancy,true);
             mListView.setAdapter(mAdapter);
             Toast.makeText(getContext(), "Нет подключения к интернету", Toast.LENGTH_SHORT).show();
         } else {
             mListVacancy = mCallBack.getAllVacancies();
-            mAdapter = new ListViewAdapter(getContext(), mListVacancy);
+            mAdapter = new ListViewAdapter(getContext(), mListVacancy,true);
             mListView.setAdapter(mAdapter);
-            saveVacanciesOverDay();
+
+            mSQLiteHelper.deleteAllVacanciesOverDay();
+
+            saveVacanciesOverDay(mListVacancy);
 
         }
     }
 
     private void getData() {
+        if (mRefreshLimit == 1)
+            mProgressBar.setVisibility(View.VISIBLE);
+
         RequestInterface mService = StartApplication.get(getContext()).getService();
-        mService.getSearchVacancies("au", "get_post_by_filter", "20", String.valueOf(mRefreshLimit), mSalary,mTerm)
+        mService.getSearchVacancies("au", "get_post_by_filter", "20", String.valueOf(mRefreshLimit), mSalary, mTerm)
                 .enqueue(new Callback<List<VacanciesModel>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<VacanciesModel>> call, @NonNull Response<List<VacanciesModel>> response) {
@@ -88,10 +97,14 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
 
                             mListVacancy.addAll(response.body());
                             Toast.makeText(getContext(), "rerererer", Toast.LENGTH_SHORT).show();
-                            mAdapter = new ListViewAdapter(getContext(), mListVacancy);
+                            mAdapter = new ListViewAdapter(getContext(), mListVacancy,true);
                             mListView.setAdapter(mAdapter);
                             mRefreshLayout.setRefreshing(false);
-                            saveVacanciesOverDay();
+                            saveVacanciesOverDay(response.body());
+                            mProgressBar.setVisibility(View.GONE);
+                        }else {
+                            mProgressBar.setVisibility(View.GONE);
+                            Toast.makeText(getContext(),"Не найдено вакансий", Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -99,7 +112,7 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
                     public void onFailure(@NonNull Call<List<VacanciesModel>> call, @NonNull Throwable t) {
                         mRefreshLayout.setRefreshing(false);
                         Toast.makeText(getContext(), "Нет подключения к интернету", Toast.LENGTH_SHORT).show();
-
+                        mProgressBar.setVisibility(View.GONE);
                     }
                 });
     }
@@ -128,9 +141,10 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
         if (!list.isEmpty()) {
             mTerm = list.get(0);
             mSalary = list.get(1);
-
+            mRefreshLimit = 1;
             Toast.makeText(getContext(), mSalary + " " + mTerm, Toast.LENGTH_SHORT).show();
             mListVacancy.clear();
+
             getData();
             mAdapter.notifyDataSetChanged();
         }
@@ -150,8 +164,9 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
         Toast.makeText(getContext(), "onPause", Toast.LENGTH_SHORT).show();
     }
 
-    private void saveVacanciesOverDay() {
-        mSQLiteHelper.saveAllVacanciesOverDay(mListVacancy);
+    private void saveVacanciesOverDay(List<VacanciesModel> list) {
+
+        mSQLiteHelper.saveAllVacanciesOverDay(list);
     }
 
     @Override
@@ -168,11 +183,5 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
         mCallBack = (FragmentCallBack) context;
 
 
-    }
-
-    @Override
-    public void onAttachFragment(Fragment childFragment) {
-        super.onAttachFragment(childFragment);
-        Toast.makeText(getContext(), "onAttachFragment", Toast.LENGTH_SHORT).show();
     }
 }

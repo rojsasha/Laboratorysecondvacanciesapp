@@ -17,7 +17,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Режим работы"
+                android:text="@string/rbCategoryMode"
                 style="@style/dialogTitleSearch"/>
         </LinearLayout>
 
@@ -43,21 +43,21 @@
                     style="@style/radioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Любая" />
+                    android:text="@string/rbTextAny" />
 
                 <RadioButton
                     android:id="@+id/rbModeFullDay"
                     style="@style/radioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Полный день" />
+                    android:text="@string/rbFullDay" />
 
                 <RadioButton
                     android:id="@+id/rbModeFlexible"
                     style="@style/radioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Гибкий" />
+                    android:text="@string/rbTextFlexible" />
 
             </LinearLayout>
 
@@ -72,14 +72,14 @@
                     style="@style/radioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Удаленно" />
+                    android:text="@string/rbTextRemotely" />
 
                 <RadioButton
                     android:id="@+id/rbModeNight"
                     style="@style/radioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Ночной" />
+                    android:text="@string/rbTextNight" />
             </LinearLayout>
         </LinearLayout>
 
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 style="@style/dialogTitleSearch"
 
-                android:text="Оклад"
+                android:text="@string/rbCategorySalary"
                  />
         </LinearLayout>
 
@@ -114,7 +114,7 @@
                     style="@style/radioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Любая" />
+                    android:text="@string/rbTextAny" />
 
                 <RadioButton
 
@@ -122,7 +122,7 @@
                     style="@style/radioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5000 +" />
+                    android:text="@string/rbTextFive" />
 
 
             </LinearLayout>
@@ -138,14 +138,14 @@
                     style="@style/radioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10000 +" />
+                    android:text="@string/rbTextTen" />
 
                 <RadioButton
                     android:id="@+id/rbSalaryThirty"
                     style="@style/radioButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="30000 +" />
+                    android:text="@string/rbTextThirty" />
             </LinearLayout>
         </LinearLayout>
 
@@ -160,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/md_white_1000"
-                android:text="Сброс"
+                android:text="@string/btnClear"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp" />
 
@@ -170,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/md_white_1000"
-                android:text="Готово"
+                android:text="@string/btnRbClear"
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp" />
 

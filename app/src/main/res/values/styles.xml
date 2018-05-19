@@ -28,7 +28,10 @@
     <item name="android:textSize">18sp</item>
     <item name="android:padding">8dp</item>
     <item name="android:background">@color/colorBorders</item>
-
-
 </style>
+    <style name="progressBarStyle">
+        <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="android:color">@color/colorPrimary</item>
+
+    </style>
 </resources>

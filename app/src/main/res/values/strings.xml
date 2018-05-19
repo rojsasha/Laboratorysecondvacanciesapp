@@ -9,9 +9,22 @@
     <string name="todo">TODO</string>
     <string name="textButton">позвонить</string>
     <string name="no_phone_textview">не указан</string>
-    <string name="no_salary">Договорная</string>
+    <string name="no_salary">договорная</string>
     <string name="au_kg">AU.KG</string>
     <string name="all_vacancies_kyr">Все вакансии Кыргызстана</string>
+    <string name="rbTextAny">Любой</string>
+    <string name="rbFullDay">Полный день</string>
+    <string name="rbTextFlexible">Гибкий</string>
+    <string name="rbTextRemotely">Удаленно</string>
+    <string name="rbTextNight">Ночной</string>
+    <string name="rbCategorySalary">Оклад</string>
+    <string name="rbTextFive">5000 +</string>
+    <string name="rbTextTen">10000 +</string>
+    <string name="rbTextThirty">30000 +</string>
+    <string name="btnClear">Сброс</string>
+    <string name="btnRbClear">Готово</string>
+    <string name="rbCategoryMode">Режим работы</string>
+    <string name="tvViewed">Просмотрено</string>
 
     <string-array name="rbMode">
         <item>Любой</item>

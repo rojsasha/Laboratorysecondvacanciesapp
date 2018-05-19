@@ -21,6 +21,7 @@ public class FavoriteVacancyActivity extends BaseActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null)
         getSupportActionBar().setTitle("Избранные вакансии");
         createDrawer(toolbar,false);
         mSQLiteHelper = StartApplication.get(getApplicationContext()).getSqLiteHelper();
@@ -33,7 +34,7 @@ public class FavoriteVacancyActivity extends BaseActivity {
         ListView listView = findViewById(R.id.listView);
         List<VacanciesModel> list = mSQLiteHelper.getFavoriteVacancy();
         if (list.isEmpty())return;
-        ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(),list);
+        ListViewAdapter adapter = new ListViewAdapter(getApplicationContext(),list,false);
         listView.setAdapter(adapter);
     }
 }

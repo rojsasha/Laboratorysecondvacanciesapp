@@ -191,16 +191,22 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     public void deleteFavoriteVacancy(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long rowId = db.delete(TABLE_FAVORITE_VACANCY, PID + "=?", new String[]{id});
+        db.delete(TABLE_FAVORITE_VACANCY, PID + "=?", new String[]{id});
         Log.d("deleteFavoriteVacancy", "ok" + id);
         db.close();
 
     }
 
+    public void deleteAllVacanciesOverDay() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long rowId = db.delete(TABLE_VACANCIES_OVER_DAY, null, null);
+        Log.d("database ","clear successful" + rowId);
+        db.close();
+    }
+
     public void saveAllVacanciesOverDay(List<VacanciesModel> list) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        db.delete(TABLE_VACANCIES_OVER_DAY, null, null);
         for (int i = 0; i < list.size(); i++) {
             VacanciesModel model = list.get(i);
             cv.put(PID, model.getPid());

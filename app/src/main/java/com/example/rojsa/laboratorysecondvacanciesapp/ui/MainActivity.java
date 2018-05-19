@@ -18,8 +18,6 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity implements FragmentCallBack, View.OnClickListener {
     private List<VacanciesModel> mList;
-    private ArrayList<String> mSalary;
-
 
 
     @Override
@@ -34,7 +32,7 @@ public class MainActivity extends BaseActivity implements FragmentCallBack, View
         createDrawer(toolbar, true);
         Intent intent = getIntent();
         mList = intent.getParcelableArrayListExtra("listVacancy");
-        mSalary = new ArrayList<>();
+        ArrayList<String> mSalary = new ArrayList<>();
 
     }
 
@@ -51,16 +49,6 @@ public class MainActivity extends BaseActivity implements FragmentCallBack, View
     @Override
     public List<VacanciesModel> getAllVacancies() {
         return mList;
-    }
-
-    @Override
-    public void saveSearchByRubrics(String salary) {
-        mSalary.add(salary);
-    }
-
-    @Override
-    public ArrayList<String> getSearchVacancies() {
-        return mSalary;
     }
 
     @Override

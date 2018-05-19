@@ -32,7 +32,6 @@
                     android:layout_marginEnd="3dp"
                     android:layout_marginRight="3dp"
                     android:maxLength="25"
-                    android:text="wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
                     android:textColor="@color/colorSelectedTab"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -50,7 +49,6 @@
                     android:gravity="right"
                     android:maxLength="19"
                     android:maxLines="1"
-                    android:text="adffsd"
                     android:textSize="@dimen/date_sp"
                     tools:ignore="RtlHardcoded" />
 
@@ -97,9 +95,8 @@
                     android:maxLength="60"
                     android:paddingLeft="6dp"
                     android:paddingStart="6dp"
-                    android:text="по результатам собеседованияж
-порезультатам скууа"
-                    android:textSize="14dp" />
+                    android:textSize="14sp"
+                    tools:ignore="RtlSymmetry" />
 
             </LinearLayout>
 
@@ -125,7 +122,7 @@
 
                 <TextView
                     android:id="@+id/tvSalary"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:layout_marginStart="3dp"
@@ -133,7 +130,8 @@
                     android:maxLines="1"
                     android:paddingLeft="6dp"
                     android:paddingStart="6dp"
-                    android:text="@string/no_salary" />
+                    android:text="@string/no_salary"
+                    tools:ignore="RtlSymmetry" />
 
                 <CheckBox
                     android:id="@+id/checkbox"
@@ -171,7 +169,7 @@
                     android:src="@drawable/ic_status_watched" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:layout_marginStart="3dp"
@@ -179,8 +177,9 @@
                     android:maxLines="2"
                     android:paddingLeft="6dp"
                     android:paddingStart="6dp"
-                    android:text="Просмотрено"
-                    android:textSize="10dp" />
+                    android:text="@string/tvViewed"
+                    android:textSize="12sp"
+                    tools:ignore="RtlSymmetry" />
             </LinearLayout>
 
 
