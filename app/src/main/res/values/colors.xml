@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="backgroundTabs">#f9b32a</color>
     <color name="colorBorders">#dcdad5</color>
+    <color name="colorTextViewBorders">#9e9c9c</color>
 
     <color name="colorSelectedTab">#ab73b6</color>
 </resources>

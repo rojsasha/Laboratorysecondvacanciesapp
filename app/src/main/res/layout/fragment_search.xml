@@ -17,10 +17,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBorders"
-                android:padding="10dp"
                 android:text="Режим работы"
-                android:textSize="27sp" />
+                style="@style/dialogTitleSearch"/>
         </LinearLayout>
 
         <LinearLayout
@@ -93,10 +91,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorBorders"
-                android:padding="10dp"
+                style="@style/dialogTitleSearch"
+
                 android:text="Оклад"
-                android:textSize="27sp" />
+                 />
         </LinearLayout>
 
         <LinearLayout
@@ -119,6 +117,7 @@
                     android:text="Любая" />
 
                 <RadioButton
+
                     android:id="@+id/rbSalaryFive"
                     style="@style/radioButton"
                     android:layout_width="wrap_content"
@@ -163,7 +162,7 @@
                 android:background="@color/md_white_1000"
                 android:text="Сброс"
                 android:textColor="@color/colorPrimary"
-                android:textSize="22sp" />
+                android:textSize="18sp" />
 
             <Button
                 android:id="@+id/btnSearch"
@@ -173,7 +172,7 @@
                 android:background="@color/md_white_1000"
                 android:text="Готово"
                 android:textColor="@color/colorPrimary"
-                android:textSize="22sp" />
+                android:textSize="18sp" />
 
 
         </LinearLayout>

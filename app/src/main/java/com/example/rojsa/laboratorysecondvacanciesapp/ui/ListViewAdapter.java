@@ -67,7 +67,13 @@ public class ListViewAdapter extends ArrayAdapter {
         assert model != null;
         holder.tvDate.setText(formatData(model.getData()));
         holder.tvJob.setText(model.getHeader());
-        holder.tvTitleCardView.setText(model.getProfession());
+        if (!model.getProfession().equals("Не определено")){
+            holder.tvTitleCardView.setText(model.getProfession());
+        }else {
+            holder.tvTitleCardView.setText(model.getHeader());
+        }
+
+        if (model.getSalary() != null)
         holder.tvSalary.setText(model.getSalary());
 
 
@@ -93,7 +99,6 @@ public class ListViewAdapter extends ArrayAdapter {
         });
         getFavoriteVacancy();
         holder.checkBox.setChecked(mCheckedState[position]);
-        if (model.getSalary().equals("")) holder.tvSalary.setText(R.string.no_salary);
         if (setViewed(model.getPid())) {
             holder.layoutViewed.setVisibility(View.VISIBLE);
         }

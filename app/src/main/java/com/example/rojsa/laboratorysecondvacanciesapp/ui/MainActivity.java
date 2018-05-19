@@ -60,7 +60,6 @@ public class MainActivity extends BaseActivity implements FragmentCallBack, View
 
     @Override
     public ArrayList<String> getSearchVacancies() {
-        //TODO проверить работоспособность
         return mSalary;
     }
 

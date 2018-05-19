@@ -133,8 +133,7 @@
                     android:maxLines="1"
                     android:paddingLeft="6dp"
                     android:paddingStart="6dp"
-                    android:text="по результатам собеседованияж
-порезультатам скууа" />
+                    android:text="@string/no_salary" />
 
                 <CheckBox
                     android:id="@+id/checkbox"
