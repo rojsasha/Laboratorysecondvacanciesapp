@@ -22,10 +22,6 @@ import com.example.rojsa.laboratorysecondvacanciesapp.data.RequestInterface;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,12 +65,12 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
         super.onViewCreated(view, savedInstanceState);
         if (mCallBack.getAllVacancies() == null) {
             mListVacancy = mSQLiteHelper.getAllVacanciesOverDay();
-            mAdapter = new ListViewAdapter(getContext(), mListVacancy,true);
+            mAdapter = new ListViewAdapter(getContext(), mListVacancy, true);
             mListView.setAdapter(mAdapter);
             Toast.makeText(getContext(), "Нет подключения к интернету", Toast.LENGTH_SHORT).show();
         } else {
             mListVacancy = mCallBack.getAllVacancies();
-            mAdapter = new ListViewAdapter(getContext(), mListVacancy,true);
+            mAdapter = new ListViewAdapter(getContext(), mListVacancy, true);
             mListView.setAdapter(mAdapter);
 
             mSQLiteHelper.deleteAllVacanciesOverDay();
@@ -93,19 +89,17 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
                 .enqueue(new Callback<List<VacanciesModel>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<VacanciesModel>> call, @NonNull Response<List<VacanciesModel>> response) {
-                        if (response.body() != null && response.isSuccessful()) {
+                        if (response.isSuccessful() && response.body() != null) {
 
                             mListVacancy.addAll(response.body());
-                            Toast.makeText(getContext(), "rerererer", Toast.LENGTH_SHORT).show();
-                            mAdapter = new ListViewAdapter(getContext(), mListVacancy,true);
-                            mListView.setAdapter(mAdapter);
+                            mListView.setAdapter(mAdapter = new ListViewAdapter(getContext(), mListVacancy, true));
                             mRefreshLayout.setRefreshing(false);
                             saveVacanciesOverDay(response.body());
-                            mProgressBar.setVisibility(View.GONE);
-                        }else {
-                            mProgressBar.setVisibility(View.GONE);
-                            Toast.makeText(getContext(),"Не найдено вакансий", Toast.LENGTH_LONG).show();
+                        } else {
+                            mRefreshLayout.setRefreshing(false);
+                            Toast.makeText(getContext(), "Не найдено вакансий", Toast.LENGTH_LONG).show();
                         }
+                        mProgressBar.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -124,19 +118,6 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
     public void filterListener(ArrayList<String> list) {
         if (!list.isEmpty()) {
             mTerm = list.get(0);
@@ -161,18 +142,18 @@ public class VacanciesOverDayFragment extends Fragment implements SwipeRefreshLa
     @Override
     public void onPause() {
         super.onPause();
-        Toast.makeText(getContext(), "onPause", Toast.LENGTH_SHORT).show();
+
     }
 
-    private void saveVacanciesOverDay(List<VacanciesModel> list) {
-
+    private void saveVacanciesOverDay(final List<VacanciesModel> list) {
         mSQLiteHelper.saveAllVacanciesOverDay(list);
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
         Intent intent = new Intent(getContext(), DetailsVacancyActivity.class);
-        intent.putExtra("modelVacancy", mListVacancy.get(position));
+        intent.putExtra("flag", true);
         intent.putExtra("position", position);
         startActivity(intent);
     }

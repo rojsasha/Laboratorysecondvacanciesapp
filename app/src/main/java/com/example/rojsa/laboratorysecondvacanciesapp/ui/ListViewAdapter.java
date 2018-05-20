@@ -46,7 +46,6 @@ public class ListViewAdapter extends ArrayAdapter {
     @Override
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         final ViewHolder holder;
-        getFavoriteVacancy();
         if (convertView == null) {
             holder = new ViewHolder();
 
@@ -74,9 +73,8 @@ public class ListViewAdapter extends ArrayAdapter {
             holder.tvTitleCardView.setText(model.getHeader());
         }
 
-        if (model.getSalary() != null)
+        if (!model.getSalary().equals(""))
         holder.tvSalary.setText(model.getSalary());
-
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

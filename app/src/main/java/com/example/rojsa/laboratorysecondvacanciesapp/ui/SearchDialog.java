@@ -1,5 +1,6 @@
 package com.example.rojsa.laboratorysecondvacanciesapp.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -25,6 +25,7 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
     private String[] mSalaryArray, mModeArray;
     private int mModePosition, mSalaryPosition;
 
+    private SearchDialogCallback mCallback;
 
     @Nullable
     @Override
@@ -107,6 +108,12 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
         }
     };
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallback = (SearchDialogCallback) context;
+    }
+
     private void setDefaultRadioButtons() {
         mRbModeAny.setChecked(true);
         mRbSalaryAny.setChecked(true);
@@ -122,7 +129,7 @@ public class SearchDialog extends DialogFragment implements View.OnClickListener
                 ArrayList<String> mSalaryModeList = new ArrayList<>();
                 mSalaryModeList.add(mModeArray[mModePosition]);
                 mSalaryModeList.add(mSalaryArray[mSalaryPosition]);
-                EventBus.getDefault().post(mSalaryModeList);
+                mCallback.searchByFilter(mSalaryModeList);
                 dismiss();
                 break;
         }

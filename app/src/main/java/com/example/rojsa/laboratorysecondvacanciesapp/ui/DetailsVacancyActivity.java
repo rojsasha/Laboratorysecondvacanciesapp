@@ -45,8 +45,8 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         setContentView(R.layout.activity_details_vacancy);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar()!= null)
-        getSupportActionBar().setTitle("Вакансии");
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setTitle("Вакансии");
         createDrawer(toolbar, false);
 
         mSQLiteHelper = StartApplication.get(this).getSqLiteHelper();
@@ -56,7 +56,15 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
 
     private void initViewElement() {
         Intent intent = getIntent();
-        mPos = intent.getIntExtra("position", 0);
+
+        if (intent.getBooleanExtra("flag", true)) {
+            getAllDayVacancies();
+            mPos = intent.getIntExtra("position", 0);
+        } else {
+            getAllFavoriteVacancies();
+            mPos = intent.getIntExtra("position", 0);
+        }
+
 
         mTvTitleDetails = findViewById(R.id.tvTitleDetails);
         mTvJob = findViewById(R.id.tvJob);
@@ -75,11 +83,12 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         mBtnPrev.setOnClickListener(this);
         mBtnNext.setOnClickListener(this);
         mCheckBox.setOnClickListener(this);
-        getAllDayVacancies();
+
 
     }
 
     private void writeData() {
+
         VacanciesModel modelVacancy = mListVacancy.get(mPos);
         mTvTitleDetails.setText(modelVacancy.getHeader());
 
@@ -145,11 +154,14 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
     }
 
     private void disableButton() {
-        if (mPos == 0) {
+        if (mListVacancy.size() == 1) {
+            mBtnNext.setVisibility(View.INVISIBLE);
             mBtnPrev.setVisibility(View.INVISIBLE);
 
         } else if (mListVacancy.size() - 1 == mPos) {
             mBtnNext.setVisibility(View.INVISIBLE);
+        } else if (mPos == 0){
+            mBtnPrev.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -203,25 +215,11 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
     }
 
     private void saveVacancy(final VacanciesModel model) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                mSQLiteHelper.saveFavoriteVacancy(model);
-            }
-        };
-        Thread thread = new Thread(runnable);
-        thread.start();
+        mSQLiteHelper.saveFavoriteVacancy(model);
     }
 
     private void deleteVacancy(final VacanciesModel model) {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                mSQLiteHelper.deleteFavoriteVacancy(model.getPid());
-            }
-        };
-        Thread thread = new Thread(runnable);
-        thread.start();
+        mSQLiteHelper.deleteFavoriteVacancy(model.getPid());
     }
 
     private boolean getFavoriteVacancies(VacanciesModel model) {
@@ -236,6 +234,10 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
 
     private void getAllDayVacancies() {
         mListVacancy = mSQLiteHelper.getAllVacanciesOverDay();
+    }
+
+    private void getAllFavoriteVacancies() {
+        mListVacancy = mSQLiteHelper.getFavoriteVacancy();
     }
 
 

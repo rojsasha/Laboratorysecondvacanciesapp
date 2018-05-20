@@ -18,6 +18,10 @@ public class TabStateAdapter extends FragmentStatePagerAdapter {
         this.mTabs = tabs;
     }
 
+    public Fragment getFirstFragment() {
+        return mTabs.get(0).getFragment();
+    }
+
     @Override
     public Fragment getItem(int position) {
         return mTabs.get(position).getFragment();

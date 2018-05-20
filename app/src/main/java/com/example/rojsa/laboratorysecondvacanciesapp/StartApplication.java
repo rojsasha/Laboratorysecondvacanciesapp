@@ -10,7 +10,7 @@ import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
 
 public class StartApplication extends Application {
     private RequestInterface service;
-    SQLiteHelper sqLiteHelper;
+    private SQLiteHelper sqLiteHelper;
 
     @Override
     public void onCreate() {
