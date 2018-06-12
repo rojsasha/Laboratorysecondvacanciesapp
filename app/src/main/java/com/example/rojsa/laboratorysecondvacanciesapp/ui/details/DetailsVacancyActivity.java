@@ -1,4 +1,4 @@
-package com.example.rojsa.laboratorysecondvacanciesapp.ui;
+package com.example.rojsa.laboratorysecondvacanciesapp.ui.details;
 
 
 import android.content.DialogInterface;
@@ -21,6 +21,7 @@ import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.StartApplication;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.base.BaseActivity;
 
 
 import java.text.ParseException;
@@ -143,10 +144,10 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.checkbox:
                 if (mCheckBox.isChecked()) {
-                    Toast.makeText(getApplicationContext(), mListVacancy.get(mPos).getPid(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "добавлено в избранные", Toast.LENGTH_LONG).show();
                     saveVacancy(mListVacancy.get(mPos));
                 } else {
-                    Toast.makeText(getApplicationContext(), mListVacancy.get(mPos).getPid(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "удалено из избранных", Toast.LENGTH_LONG).show();
                     deleteVacancy(mListVacancy.get(mPos));
                 }
                 break;
@@ -160,7 +161,7 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
 
         } else if (mListVacancy.size() - 1 == mPos) {
             mBtnNext.setVisibility(View.INVISIBLE);
-        } else if (mPos == 0){
+        } else if (mPos == 0) {
             mBtnPrev.setVisibility(View.INVISIBLE);
         }
     }

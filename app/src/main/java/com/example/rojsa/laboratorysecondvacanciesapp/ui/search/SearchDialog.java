@@ -1,4 +1,4 @@
-package com.example.rojsa.laboratorysecondvacanciesapp.ui;
+package com.example.rojsa.laboratorysecondvacanciesapp.ui.search;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.SearchDialogCallback;
 
 
 import java.util.ArrayList;

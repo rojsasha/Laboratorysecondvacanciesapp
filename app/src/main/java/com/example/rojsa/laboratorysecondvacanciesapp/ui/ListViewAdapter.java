@@ -33,13 +33,15 @@ public class ListViewAdapter extends ArrayAdapter {
     private SQLiteHelper mSqLiteHelper = StartApplication.get(getContext()).getSqLiteHelper();
     private boolean[] mCheckedState;
     private List<VacanciesModel> mList;
-    private boolean b;
+    private int activity;
+    private Context context;
 
-    ListViewAdapter(@NonNull Context context, List<VacanciesModel> list,boolean b) {
+    public ListViewAdapter(@NonNull Context context, List<VacanciesModel> list, int activity) {
         super(context, 0, list);
+        this.context = context;
         mCheckedState = new boolean[list.size()];
         this.mList = list;
-        this.b = b;
+        this.activity = activity;
     }
 
     @NonNull
@@ -67,14 +69,14 @@ public class ListViewAdapter extends ArrayAdapter {
         assert model != null;
         holder.tvDate.setText(formatData(model.getData()));
         holder.tvJob.setText(model.getHeader());
-        if (!model.getProfession().equals("Не определено")){
+        if (!model.getProfession().equals("Не определено")) {
             holder.tvTitleCardView.setText(model.getProfession());
-        }else {
+        } else {
             holder.tvTitleCardView.setText(model.getHeader());
         }
 
         if (!model.getSalary().equals(""))
-        holder.tvSalary.setText(model.getSalary());
+            holder.tvSalary.setText(model.getSalary());
 
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -91,6 +93,7 @@ public class ListViewAdapter extends ArrayAdapter {
                     saveVacancy(model);
                 } else {
                     deleteVacancy(model);
+                    updateFavoriteVacanciesAdapter(position);
                     Toast.makeText(getContext(), "Удалено из избранных " + mCheckedState[position] + model.getHeader(), Toast.LENGTH_SHORT).show();
                 }
 
@@ -98,12 +101,23 @@ public class ListViewAdapter extends ArrayAdapter {
         });
         getFavoriteVacancy();
         holder.checkBox.setChecked(mCheckedState[position]);
-        if (b){
+        if (activity == 0) {
             if (setViewed(model.getPid())) {
                 holder.layoutViewed.setVisibility(View.VISIBLE);
+            }else {
+                holder.layoutViewed.setVisibility(View.GONE);
             }
+
         }
         return convertView;
+    }
+
+    private void updateFavoriteVacanciesAdapter(int position) {
+        if (activity == 1) {
+//            ((FavoriteVacanciesRefreshAdapter)context).refreshAdapterFavorite(position);
+            Toast.makeText(getContext(), "updateFavoriteVacanciesAdapter", Toast.LENGTH_LONG).show();
+
+        }
     }
 
     private void saveVacancy(final VacanciesModel model) {
@@ -127,6 +141,7 @@ public class ListViewAdapter extends ArrayAdapter {
         Thread thread = new Thread(runnable);
         thread.start();
     }
+
 
     private String formatData(String data) {
         String inputPattern = "yyyy-MM-dd HH:mm:ss";

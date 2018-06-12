@@ -9,5 +9,4 @@ public interface FragmentCallBack {
     List<VacanciesModel> getAllVacancies();
 
 
-
 }

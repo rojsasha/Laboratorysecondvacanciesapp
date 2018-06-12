@@ -14,17 +14,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".ui.DetailsVacancyActivity" />
-        <activity android:name=".ui.SplashScreenActivity">
+        <activity android:name=".ui.details.DetailsVacancyActivity" />
+        <activity android:name=".ui.splashscreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.FavoriteVacancyActivity" />
+        <activity android:name=".ui.favorite.FavoriteVacancyActivity" />
     </application>
 
 </manifest>

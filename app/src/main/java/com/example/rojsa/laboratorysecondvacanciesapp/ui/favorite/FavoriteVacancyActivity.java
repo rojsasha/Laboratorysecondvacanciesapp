@@ -1,4 +1,4 @@
-package com.example.rojsa.laboratorysecondvacanciesapp.ui;
+package com.example.rojsa.laboratorysecondvacanciesapp.ui.favorite;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,9 @@ import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.StartApplication;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.SQLiteHelper;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.base.BaseActivity;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.details.DetailsVacancyActivity;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.ListViewAdapter;
 
 import java.util.List;
 
@@ -38,8 +41,9 @@ public class FavoriteVacancyActivity extends BaseActivity implements AdapterView
         ListView listView = findViewById(R.id.listView);
         list = mSQLiteHelper.getFavoriteVacancy();
         if (list.isEmpty())return;
-        mAdapter = new ListViewAdapter(getApplicationContext(),list,false);
+        mAdapter = new ListViewAdapter(getApplicationContext(),list,1);
         listView.setAdapter(mAdapter);
+
         listView.setOnItemClickListener(this);
     }
 
@@ -58,4 +62,6 @@ public class FavoriteVacancyActivity extends BaseActivity implements AdapterView
         intent.putExtra("position", position);
         startActivity(intent);
     }
+
+
 }

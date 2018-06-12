@@ -1,4 +1,4 @@
-package com.example.rojsa.laboratorysecondvacanciesapp.ui;
+package com.example.rojsa.laboratorysecondvacanciesapp.ui.splashscreen;
 
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -15,6 +15,7 @@ import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.StartApplication;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.RequestInterface;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void getData() {
         Toast.makeText(getApplicationContext(),"internet good",Toast.LENGTH_SHORT).show();
         RequestInterface service = StartApplication.get(getApplicationContext()).getService();
-        service.getAllVacancies("au", "get_all_vacancies", "20", "1")
+        service.getAllVacancies("", "", "20", "1")
                 .enqueue(new Callback<List<VacanciesModel>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<VacanciesModel>> call, @NonNull Response<List<VacanciesModel>> response) {

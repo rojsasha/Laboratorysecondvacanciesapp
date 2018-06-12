@@ -1,16 +1,16 @@
-package com.example.rojsa.laboratorysecondvacanciesapp.ui;
+package com.example.rojsa.laboratorysecondvacanciesapp.ui.base;
 
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.main.MainActivity;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.favorite.FavoriteVacancyActivity;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -19,8 +19,6 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-
-import java.util.Objects;
 
 /**
  * Created by rojsa on 15.04.2018.

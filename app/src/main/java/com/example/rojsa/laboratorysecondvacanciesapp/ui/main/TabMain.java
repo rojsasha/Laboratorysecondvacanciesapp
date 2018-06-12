@@ -1,4 +1,4 @@
-package com.example.rojsa.laboratorysecondvacanciesapp.ui;
+package com.example.rojsa.laboratorysecondvacanciesapp.ui.main;
 
 import android.support.v4.app.Fragment;
 
@@ -7,7 +7,7 @@ public class TabMain {
     private final Fragment mFragment;
     private final CharSequence mTitle;
 
-    TabMain(Fragment mFragment, CharSequence title) {
+    public TabMain(Fragment mFragment, CharSequence title) {
         this.mFragment = mFragment;
         this.mTitle = title;
     }

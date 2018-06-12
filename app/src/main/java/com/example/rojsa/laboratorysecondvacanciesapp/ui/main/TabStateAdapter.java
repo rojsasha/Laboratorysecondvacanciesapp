@@ -1,4 +1,4 @@
-package com.example.rojsa.laboratorysecondvacanciesapp.ui;
+package com.example.rojsa.laboratorysecondvacanciesapp.ui.main;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class TabStateAdapter extends FragmentStatePagerAdapter {
     private ArrayList<TabMain> mTabs;
 
-    TabStateAdapter(FragmentManager fm, ArrayList<TabMain> tabs) {
+    public TabStateAdapter(FragmentManager fm, ArrayList<TabMain> tabs) {
         super(fm);
         this.mTabs = tabs;
     }

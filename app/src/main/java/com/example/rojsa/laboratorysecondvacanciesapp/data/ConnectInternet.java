@@ -1,5 +1,6 @@
 package com.example.rojsa.laboratorysecondvacanciesapp.data;
 
+import com.example.rojsa.laboratorysecondvacanciesapp.BuildConfig;
 import com.example.rojsa.laboratorysecondvacanciesapp.utils.Constants;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class ConnectInternet {
     public static RequestInterface initRetrofit(){
         if(service == null) {
             return new Retrofit.Builder()
-                    .baseUrl(Constants.BASE_URL)
+                    .baseUrl(BuildConfig.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(getOkHttpClient())
                     .build()

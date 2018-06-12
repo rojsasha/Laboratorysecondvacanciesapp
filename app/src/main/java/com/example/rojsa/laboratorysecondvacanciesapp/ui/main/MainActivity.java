@@ -1,6 +1,5 @@
-package com.example.rojsa.laboratorysecondvacanciesapp.ui;
+package com.example.rojsa.laboratorysecondvacanciesapp.ui.main;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -13,6 +12,10 @@ import android.widget.Toast;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.FragmentCallBack;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.search.SearchDialog;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.SearchDialogCallback;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.rojsa.laboratorysecondvacanciesapp.ui;
+package com.example.rojsa.laboratorysecondvacanciesapp.ui.main;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
