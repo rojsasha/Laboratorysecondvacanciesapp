@@ -229,6 +229,7 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
         for (int i = 0; i < list.size(); i++) {
             if (model.getPid().equals(list.get(i).getPid()))
                 return true;
+
         }
         return false;
 
