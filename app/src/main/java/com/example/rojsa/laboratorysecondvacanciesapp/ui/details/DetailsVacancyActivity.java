@@ -231,6 +231,7 @@ public class DetailsVacancyActivity extends BaseActivity implements View.OnClick
                 return true;
         }
         return false;
+
     }
 
     private void getAllDayVacancies() {
