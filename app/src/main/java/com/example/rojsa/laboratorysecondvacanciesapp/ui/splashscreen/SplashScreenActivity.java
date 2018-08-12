@@ -53,7 +53,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void getData() {
         Toast.makeText(getApplicationContext(),"internet good",Toast.LENGTH_SHORT).show();
         RequestInterface service = StartApplication.get(getApplicationContext()).getService();
-        service.getAllVacancies("", "", "20", "1")
+        service.getAllVacancies("login", "f", "limit", "page")
                 .enqueue(new Callback<List<VacanciesModel>>() {
                     @Override
                     public void onResponse(@NonNull Call<List<VacanciesModel>> call, @NonNull Response<List<VacanciesModel>> response) {
@@ -69,7 +69,6 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(@NonNull Call<List<VacanciesModel>> call, @NonNull Throwable t) {
-                        Toast.makeText(getApplicationContext(),"internet good" + t.getLocalizedMessage(),Toast.LENGTH_SHORT).show();
                     }
                 });
     }

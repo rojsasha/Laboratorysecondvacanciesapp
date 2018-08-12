@@ -1,6 +1,7 @@
 package com.example.rojsa.laboratorysecondvacanciesapp.data;
 
 import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
+import com.example.rojsa.laboratorysecondvacanciesapp.data.model.rubrics.Rubrics;
 import com.example.rojsa.laboratorysecondvacanciesapp.utils.Constants;
 
 import java.util.List;
@@ -26,5 +27,8 @@ public interface RequestInterface {
                                                   @Field("limit") String limit,
                                                   @Field("page") String page,
                                                   @Field("salary") String salary,
-                                                  @Field("term") String term);
+                                                  @Field("term") String term); @FormUrlEncoded
+    @POST(Constants.ENDPOINT)
+    Call<List<Rubrics>> getRubrics(@Field("login") String login,
+                                   @Field("f") String f);
 }

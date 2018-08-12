@@ -196,7 +196,7 @@
                             android:paddingEnd="50dp"
 
 
-                            android:text="@string/no_salary"
+
                             android:textSize="14dp"
                             app:layout_constraintEnd_toStartOf="@id/imageSalary"
                             android:paddingRight="50dp" />

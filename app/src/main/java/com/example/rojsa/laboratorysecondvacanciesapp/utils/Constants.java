@@ -2,7 +2,6 @@ package com.example.rojsa.laboratorysecondvacanciesapp.utils;
 
 
 public class Constants {
-    public static final String BASE_URL = "https://";
-    public static final String ENDPOINT = "";
+    public static final String ENDPOINT = "ENDPOINT";
 
 }

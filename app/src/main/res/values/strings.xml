@@ -25,6 +25,7 @@
     <string name="btnRbClear">Готово</string>
     <string name="rbCategoryMode">Режим работы</string>
     <string name="tvViewed">Просмотрено</string>
+    <string name="text_dialog_call">Выберите телефон</string>
 
     <string-array name="rbMode">
         <item>Любой</item>

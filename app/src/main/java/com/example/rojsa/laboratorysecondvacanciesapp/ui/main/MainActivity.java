@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.example.rojsa.laboratorysecondvacanciesapp.R;
 import com.example.rojsa.laboratorysecondvacanciesapp.data.model.VacanciesModel;
 import com.example.rojsa.laboratorysecondvacanciesapp.ui.FragmentCallBack;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.main.category.CategoryFragment;
+import com.example.rojsa.laboratorysecondvacanciesapp.ui.main.overday.VacanciesOverDayFragment;
 import com.example.rojsa.laboratorysecondvacanciesapp.ui.search.SearchDialog;
 import com.example.rojsa.laboratorysecondvacanciesapp.ui.SearchDialogCallback;
 import com.example.rojsa.laboratorysecondvacanciesapp.ui.base.BaseActivity;
@@ -38,14 +40,13 @@ public class MainActivity extends BaseActivity implements FragmentCallBack, View
         createDrawer(toolbar, true);
         Intent intent = getIntent();
         mList = intent.getParcelableArrayListExtra("listVacancy");
-        ArrayList<String> mSalary = new ArrayList<>();
 
     }
 
     private void createTab() {
         ArrayList<TabMain> tabs = new ArrayList<>();
         tabs.add(new TabMain(new VacanciesOverDayFragment(), "Вакансии за сутки"));
-        tabs.add(new TabMain(new SuitableFragment(), "Подходящие"));
+        tabs.add(new TabMain(new CategoryFragment(), "Подходящие"));
         mViewPager = findViewById(R.id.viewPager);
         mViewPager.setAdapter(mStateAdapter = new TabStateAdapter(getSupportFragmentManager(), tabs));
         TabLayout tabLayout = findViewById(R.id.tabLayout);
